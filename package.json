@@ -1,0 +1,12 @@
+{
+  "name": "qcc-2026-backend",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Serverless backend for Quality Creator Challenge 2026 (Vercel + Postgres/Neon)",
+  "scripts": {
+    "dev": "vercel dev"
+  },
+  "dependencies": {
+    "@vercel/postgres": "^0.9.0"
+  }
+}
