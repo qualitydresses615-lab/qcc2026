@@ -32,9 +32,12 @@ module.exports = async (req, res) => {
     mobile = (mobile || '').trim();
     instagram = (instagram || '').trim().replace(/^@+/, '');
     city = (city || '').trim() || 'Bharuch';
+    // Age & gender were removed from the public registration form; keep
+    // the columns nullable in the DB and just store null if absent.
     const ageNum = age ? parseInt(age, 10) : null;
+    gender = gender || null;
 
-    if (!name || !mobile || !instagram || !gender) {
+    if (!name || !mobile || !instagram) {
       res.status(400).json({ error: 'Missing required fields' });
       return;
     }
