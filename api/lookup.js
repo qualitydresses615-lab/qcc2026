@@ -6,10 +6,17 @@
 // old in-memory/localStorage version could never support).
 
 const { sql, toPublicCreator } = require('../lib/db');
+const { checkRateLimit } = require('../lib/rateLimit');
 
 module.exports = async (req, res) => {
   if (req.method !== 'GET') {
     res.status(405).json({ error: 'Method not allowed' });
+    return;
+  }
+
+  const allowed = await checkRateLimit(req, 'lookup', 20, 300);
+  if (!allowed) {
+    res.status(429).json({ error: 'Too many requests. Please try again shortly.' });
     return;
   }
 
