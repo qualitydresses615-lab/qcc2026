@@ -13,9 +13,17 @@
 // column eliminates that class of bug entirely.
 
 const { sql, toPublicCreator } = require('../lib/db');
+const { checkRateLimit } = require('../lib/rateLimit');
 
 function isValidMobile(m) {
   return typeof m === 'string' && /^[6-9]\d{9}$/.test(m.trim());
+}
+
+// Instagram handles are letters, numbers, periods and underscores,
+// max 30 chars (Instagram's own limit). Anything else is rejected
+// instead of silently stored — closes off garbage/script-like input.
+function isValidInstagram(h) {
+  return typeof h === 'string' && /^[a-zA-Z0-9._]{1,30}$/.test(h);
 }
 
 module.exports = async (req, res) => {
@@ -24,14 +32,23 @@ module.exports = async (req, res) => {
     return;
   }
 
+  // Basic anti-spam throttle: max 6 registration attempts per IP per
+  // 10 minutes. Legitimate users never hit this; scripted bulk
+  // registration does.
+  const allowed = await checkRateLimit(req, 'register', 6, 600);
+  if (!allowed) {
+    res.status(429).json({ error: 'Too many attempts. Please try again in a few minutes.' });
+    return;
+  }
+
   try {
     const body = typeof req.body === 'string' ? JSON.parse(req.body || '{}') : (req.body || {});
     let { name, mobile, instagram, age, gender, city } = body;
 
-    name = (name || '').trim();
+    name = (name || '').trim().slice(0, 60);
     mobile = (mobile || '').trim();
     instagram = (instagram || '').trim().replace(/^@+/, '');
-    city = (city || '').trim() || 'Bharuch';
+    city = (city || '').trim().slice(0, 40) || 'Bharuch';
     // Age & gender were removed from the public registration form; keep
     // the columns nullable in the DB and just store null if absent.
     const ageNum = age ? parseInt(age, 10) : null;
@@ -43,6 +60,10 @@ module.exports = async (req, res) => {
     }
     if (!isValidMobile(mobile)) {
       res.status(400).json({ error: 'Invalid mobile number' });
+      return;
+    }
+    if (!isValidInstagram(instagram)) {
+      res.status(400).json({ error: 'Invalid Instagram username' });
       return;
     }
 
@@ -91,3 +112,4 @@ module.exports = async (req, res) => {
     res.status(500).json({ error: 'Internal server error' });
   }
 };
+
