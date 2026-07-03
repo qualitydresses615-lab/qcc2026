@@ -6,10 +6,21 @@
 // since this endpoint is reachable by anyone who scans a badge's QR code.
 
 const { sql } = require('../lib/db');
+const { checkRateLimit } = require('../lib/rateLimit');
 
 module.exports = async (req, res) => {
   if (req.method !== 'GET') {
     res.status(405).json({ error: 'Method not allowed' });
+    return;
+  }
+
+  // A genuine QR-code scan is an occasional, one-off lookup. A script
+  // looping through QCC-1000, QCC-1001, ... to scrape every creator's
+  // name/Instagram handle is not — this throttle makes that loop
+  // impractically slow without blocking normal verification use.
+  const allowed = await checkRateLimit(req, 'verify', 20, 300);
+  if (!allowed) {
+    res.status(429).json({ error: 'Too many requests. Please try again shortly.' });
     return;
   }
 
