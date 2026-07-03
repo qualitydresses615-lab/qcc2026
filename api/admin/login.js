@@ -12,10 +12,20 @@
 // flag. Every other /api/admin/* route requires this token.
 
 const { passwordMatches, createSession } = require('../../lib/auth');
+const { checkRateLimit } = require('../../lib/rateLimit');
 
 module.exports = async (req, res) => {
   if (req.method !== 'POST') {
     res.status(405).json({ error: 'Method not allowed' });
+    return;
+  }
+
+  // Max 8 login attempts per IP per 15 minutes — stops password
+  // brute-forcing without needing a CAPTCHA for the one legitimate
+  // admin logging in occasionally.
+  const allowed = await checkRateLimit(req, 'admin_login', 8, 900);
+  if (!allowed) {
+    res.status(429).json({ error: 'Too many attempts. Please try again later.' });
     return;
   }
 
@@ -45,3 +55,4 @@ module.exports = async (req, res) => {
     res.status(500).json({ error: 'Internal server error' });
   }
 };
+
