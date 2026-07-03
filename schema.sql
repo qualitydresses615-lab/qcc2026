@@ -42,3 +42,18 @@ CREATE TABLE IF NOT EXISTS admin_sessions (
 );
 
 CREATE INDEX IF NOT EXISTS idx_admin_sessions_expires ON admin_sessions (expires_at);
+
+-- ============================================================
+-- Rate limiting (added for security hardening — July 2026)
+-- Tracks recent hits per IP + action so register/login/verify
+-- endpoints can be throttled against spam and bulk scraping.
+-- Rows are cheap and short-lived; an old-row cleanup job is
+-- optional but not required for this to work correctly.
+-- ============================================================
+CREATE TABLE IF NOT EXISTS rate_hits (
+  id   BIGSERIAL PRIMARY KEY,
+  ip   TEXT NOT NULL,
+  key  TEXT NOT NULL,
+  ts   TIMESTAMPTZ NOT NULL DEFAULT now()
+);
+CREATE INDEX IF NOT EXISTS idx_rate_hits_lookup ON rate_hits (ip, key, ts);
