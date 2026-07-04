@@ -657,7 +657,7 @@ footer{background:#060607;border-top:1px solid var(--line);padding:70px 0 40px}
     </div>
     <h1 class="rev in rev-d1"><span class="l1">Reel Banao, Naam Kamao,</span><span class="l2">Cash Le Jao</span></h1>
     <div class="hero-callout rev in rev-d2">
-      <p>Jeeto <strong>₹40,000+</strong> — bas teen kaam: <strong>showroom mein shoot karo</strong>, <strong>sale ke offers dikhao</strong>, aur <strong>QCC ka naam batao</strong>. Free registration, sirf 1 minute mein.</p>
+      <p>Jeeto <strong>₹40,000+</strong> — bas teen kaam: <strong>showroom mein shoot karo</strong>, <strong>sale ke offers dikhao</strong>, aur <strong>doston ko QCC ke baare mein batao</strong>. Free registration, sirf 1 minute mein.</p>
     </div>
     <div class="hero-ctas rev in rev-d4">
       <button class="btn btn-gold glow-btn" data-open-reg>Register Now
@@ -666,10 +666,10 @@ footer{background:#060607;border-top:1px solid var(--line);padding:70px 0 40px}
       <a href="#prizes" class="btn btn-ghost" data-scroll>₹40,000+ Ke Inaam Dekho</a>
     </div>
     <div class="trust-strip" style="justify-content:flex-start;margin-top:40px">
-      <span class="trust-tag"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg>Since 1990</span>
       <span class="trust-tag"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg>₹40,000+ Prize Pool</span>
       <span class="trust-tag"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg>Bharuch District Only</span>
-      <span class="trust-tag"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg>Free Registration</span>
+      <span class="trust-tag"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg>Fair, Transparent Judging</span>
+      <span class="trust-tag"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg>No Purchase Needed</span>
     </div>
     <div class="counter-strip rev in rev-d4">
       <span class="live-counter"><span class="lc-dot"></span><b id="liveCount">0</b><span>Bharuch Creators Already Joined</span></span>
@@ -680,7 +680,6 @@ footer{background:#060607;border-top:1px solid var(--line);padding:70px 0 40px}
         <span class="hc-item"><b id="cdS">00</b><i>Sec</i></span>
       </span>
     </div>
-    <p class="hero-social-proof rev in rev-d4">Already <b id="liveCount2">0</b>+ creators have joined. Don't miss your chance.</p>
   </div>
   <a href="#trust" class="hero-arrow" aria-label="Scroll" data-scroll>
     <svg viewBox="0 0 24 24" width="30" height="30" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 5v14M6 13l6 6-6 6"/></svg>
@@ -880,9 +879,9 @@ footer{background:#060607;border-top:1px solid var(--line);padding:70px 0 40px}
       <div class="dt-item rev">
         <div class="dt-dot">🎬</div>
         <div class="dt-body">
-          <div class="dt-date">11 July – 31 July 2026</div>
-          <div class="dt-title">Competition</div>
-          <div class="dt-desc">Register, create your reels tagged #QCC2026, and post to enter.</div>
+          <div class="dt-date">31 August 2026</div>
+          <div class="dt-title">Last Date To Post</div>
+          <div class="dt-desc">Register anytime, then post your reel tagged #QCC2026 before 31 August 2026 to enter.</div>
         </div>
       </div>
     </div>
@@ -1052,7 +1051,7 @@ footer{background:#060607;border-top:1px solid var(--line);padding:70px 0 40px}
 
 <!-- ══════════ STICKY MOBILE CTA ══════════ -->
 <div class="sticky-cta">
-  <button class="btn btn-gold" data-open-reg>Registration Start Karo
+  <button class="btn btn-gold" data-open-reg>Register Now
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
   </button>
 </div>
@@ -1735,7 +1734,7 @@ setTimeout(()=>{ const ls=$('#loadScreen'); if(ls && !ls.classList.contains('hid
     const data = await r.json().catch(()=>({}));
     count = data.count || 0;
   }catch(err){ /* network hiccup — fall back to base count only */ }
-  const base=312; // seed count so the page has social proof before real registrations accumulate
+  const base=46; // seed count so the page has social proof before real registrations accumulate
   const el=$('#liveCount'); const el2=$('#liveCount2');
   if(!el)return;
   const target=base+count;
@@ -1746,11 +1745,11 @@ setTimeout(()=>{ const ls=$('#loadScreen'); if(ls && !ls.classList.contains('hid
   requestAnimationFrame(tick);
 })();
 
-/* ───── hero registration countdown (competition closes 31 July 2026) ───── */
+/* ───── hero registration countdown (competition closes 31 August 2026) ───── */
 (function(){
   const dEl=$('#cdD'), hEl=$('#cdH'), mEl=$('#cdM'), sEl=$('#cdS'), wrap=$('#heroCountdown');
   if(!wrap)return;
-  const target=new Date('2026-07-31T23:59:59+05:30').getTime();
+  const target=new Date('2026-08-31T23:59:59+05:30').getTime();
   function pad(n){return String(n).padStart(2,'0');}
   function tick(){
     const diff=target-Date.now();
