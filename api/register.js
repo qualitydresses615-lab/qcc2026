@@ -14,6 +14,7 @@
 
 const { sql, toPublicCreator } = require('../lib/db');
 const { checkRateLimit } = require('../lib/rateLimit');
+const { sendRegistrationWhatsapp } = require('../lib/whatsapp');
 
 function isValidMobile(m) {
   return typeof m === 'string' && /^[6-9]\d{9}$/.test(m.trim());
@@ -87,8 +88,13 @@ module.exports = async (req, res) => {
       RETURNING *
     `;
 
+    const creator = toPublicCreator(inserted.rows[0]);
+
+    // Best-effort: never let a WhatsApp API hiccup fail the registration.
+    await sendRegistrationWhatsapp(mobile, name, creator.id).catch(() => {});
+
     res.status(201).json({
-      creator: toPublicCreator(inserted.rows[0]),
+      creator,
       duplicate: false,
     });
   } catch (err) {
@@ -112,4 +118,3 @@ module.exports = async (req, res) => {
     res.status(500).json({ error: 'Internal server error' });
   }
 };
-
