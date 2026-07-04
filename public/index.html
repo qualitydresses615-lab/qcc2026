@@ -1109,7 +1109,7 @@ footer{background:#060607;border-top:1px solid var(--line);padding:70px 0 40px}
       <div class="profile-row"><span class="pl">Status</span><span class="pv" id="vfStatus">—</span></div>
       <div class="stub-note" style="text-align:left">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></svg>
-        <span>Live badges will point to <b>qualitydresses.in/qcc/verify/&lt;ID&gt;</b>. This preview simulates that page using this device's local data only.</span>
+        <span>Live badges point to <b>qcc.qualitydresses.in/verify/&lt;ID&gt;</b>. This preview simulates that page using this device's local data only.</span>
       </div>
     </div>
   </div>
@@ -1529,7 +1529,7 @@ async function drawBadge(rec){
   ctx.beginPath();ctx.moveTo(920,90);ctx.lineTo(920,H-90);ctx.stroke();
 
   // QR (points to verify URL — front-end stub page)
-  const verifyUrl=`https://qualitydresses.in/qcc/verify/${rec.id}`;
+  const verifyUrl=`https://qcc.qualitydresses.in/verify/${rec.id}`;
   const qr=new QRious({value:verifyUrl,size:270,background:'#151318',foreground:'#F2D06B',level:'M'});
   const qimg=new Image();
   await new Promise(r=>{qimg.onload=r;qimg.src=qr.toDataURL();});
@@ -1575,7 +1575,7 @@ $('#btnPDF').onclick=()=>{
 };
 $('#btnShare').onclick=async()=>{
   const cv=$('#badgeCanvas'); const r=window._lastRecord;
-  const verifyUrl=`https://qualitydresses.in/qcc/verify/${r.id}`;
+  const verifyUrl=`https://qcc.qualitydresses.in/verify/${r.id}`;
   const text=`I'm an official creator in the Quality Creator Challenge 2026! My QCC ID is ${r.id} 🎬✨ #QCC2026 @qualitydresses90`;
   cv.toBlob(async(blob)=>{
     const file=new File([blob],badgeFilename('png'),{type:'image/png'});
@@ -1817,7 +1817,7 @@ if($('#pfDownloadBadge')) $('#pfDownloadBadge').onclick=async()=>{
   a.download=`QCC2026_${rec.id}.png`; a.href=cv.toDataURL(); a.click(); toast('Badge downloaded');
 };
 
-/* ───── QR Verify page (front-end shell, simulates qualitydresses.in/qcc/verify/<ID>) ───── */
+/* ───── QR Verify page (real route: /verify/<ID> rewrites to this page via vercel.json) ───── */
 const verifyScrim=$('#verifyScrim');
 function closeVerify(){ if(!verifyScrim)return; verifyScrim.classList.remove('open'); document.body.classList.remove('no-scroll'); }
 if($('#verifyClose')) $('#verifyClose').onclick=closeVerify;
@@ -1836,6 +1836,11 @@ async function openVerifyById(id){
 }
 // Support opening verify view via #verify=QCC-1000 hash for local testing
 if(location.hash.startsWith('#verify=')) openVerifyById(location.hash.replace('#verify=',''));
+// Real QR-code route: /verify/QCC-1000 (rewritten to this page by vercel.json)
+(function(){
+  const m=location.pathname.match(/\/verify\/([A-Za-z0-9-]+)/);
+  if(m) openVerifyById(decodeURIComponent(m[1]));
+})();
 
 </script>
 </body>
