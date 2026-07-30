@@ -335,7 +335,7 @@ footer a:hover{color:var(--gold)}
       <span class="eyebrow">Follow Along</span>
       <h2>Life At @qualitydresses</h2>
     </div>
-    <div class="insta-grid">
+    <div class="insta-grid" id="instaGrid">
       <div class="placeholder-img">IG Post</div>
       <div class="placeholder-img">IG Post</div>
       <div class="placeholder-img">IG Post</div>
@@ -476,6 +476,27 @@ function resetQuiz(){
     }
   }catch(err){
     console.error('Live reviews unavailable, showing sample content', err);
+  }
+})();
+
+// Live Instagram feed — same fail-safe pattern as reviews: if the fetch
+// fails, the placeholder grid just stays as-is.
+(async function loadInstagramFeed(){
+  try{
+    const r = await fetch('/api/instagram-feed');
+    if(!r.ok) return;
+    const data = await r.json();
+    if(!data.posts || !data.posts.length) return;
+
+    const grid = document.getElementById('instaGrid');
+    grid.innerHTML = data.posts.map(post => `
+      <a href="${post.permalink}" target="_blank" rel="noopener" style="display:block;aspect-ratio:1/1;border-radius:6px;overflow:hidden;position:relative">
+        <img src="${post.image}" alt="${post.caption ? post.caption.replace(/"/g,'&quot;') : 'Instagram post'}" style="width:100%;height:100%;object-fit:cover;display:block">
+        ${post.isVideo ? '<span style="position:absolute;top:6px;right:6px;background:rgba(38,34,29,.7);color:#fff;font-size:.65rem;padding:2px 6px;border-radius:4px">▶</span>' : ''}
+      </a>
+    `).join('');
+  }catch(err){
+    console.error('Live Instagram feed unavailable, showing placeholders', err);
   }
 })();
 </script>
