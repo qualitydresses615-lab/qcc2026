@@ -332,63 +332,13 @@ footer a:hover{color:var(--gold)}
 <!-- ============ ABOUT ============ -->
 <section class="section" id="about">
   <div class="wrap">
-    <div class="section-head center">
+    <div class="section-head">
       <span class="eyebrow">Our Story</span>
       <h2>A Family Business, Not Just a Store.</h2>
-      <p>Quality Dresses opened its doors in 1990 with one goal — bring honest quality and real style to every family in Bharuch. Watch how far that promise has taken us.</p>
-    </div>
-    <div class="growth-timeline">
-      <div class="growth-item rev" data-target="200">
-        <div class="growth-year">1990</div>
-        <div class="growth-bar-track"><div class="growth-bar" data-max="4500" data-value="200"></div></div>
-        <div class="growth-sqft"><span class="counter" data-target="200">0</span><span class="unit"> sq ft</span></div>
-        <h4>Where It All Began</h4>
-        <p>A small showroom, one big idea — honest quality and real style for every family in Bharuch.</p>
-      </div>
-      <div class="growth-item rev" data-target="400">
-        <div class="growth-year">[Year — tell me]</div>
-        <div class="growth-bar-track"><div class="growth-bar" data-max="4500" data-value="400"></div></div>
-        <div class="growth-sqft"><span class="counter" data-target="400">0</span><span class="unit"> sq ft</span></div>
-        <h4>Outgrowing Our Walls</h4>
-        <p>Word spread, footfall grew, and we doubled down — literally — to keep serving Bharuch better.</p>
-      </div>
-      <div class="growth-item rev" data-target="4500">
-        <div class="growth-year">Today</div>
-        <div class="growth-bar-track"><div class="growth-bar" data-max="4500" data-value="4500"></div></div>
-        <div class="growth-sqft"><span class="counter" data-target="4500">0</span><span class="unit">+ sq ft</span></div>
-        <h4>A Showroom For the Whole Family</h4>
-        <p>Men's, Women's, Boys' &amp; Girls' fashion — ethnic, casual and formal — all under one roof.</p>
-      </div>
-      <div class="growth-item rev future">
-        <div class="growth-year">What's Next</div>
-        <div class="growth-bar-track"><div class="growth-bar future-bar"></div></div>
-        <div class="growth-sqft"><span class="plus-icon">+</span></div>
-        <h4>More Coming Soon</h4>
-        <p>Ankleshwar is next on our journey — the same promise, in a new neighbourhood.</p>
-      </div>
+      <p>Quality Dresses opened its doors in 1990 with one goal — bring honest quality and real style to every family in Bharuch. Three and a half decades later, that promise hasn't changed, even as the store has grown into a 4,500+ sq ft showroom carrying fashion for every member of the family.</p>
     </div>
   </div>
 </section>
-
-<style>
-.growth-timeline{display:grid;grid-template-columns:repeat(4,1fr);gap:28px;margin-top:48px;position:relative}
-@media(max-width:900px){.growth-timeline{grid-template-columns:1fr;gap:36px}}
-.growth-item{text-align:center;position:relative;padding:0 8px}
-.growth-timeline:not(.no-connector) .growth-item:not(:last-child)::after{content:'';position:absolute;top:14px;right:-14px;width:28px;height:2px;background:var(--line)}
-@media(max-width:900px){.growth-timeline .growth-item:not(:last-child)::after{display:none}}
-.growth-year{font-family:var(--serif);font-size:1.05rem;color:var(--gold-deep);font-weight:700;margin-bottom:14px}
-.growth-bar-track{height:10px;background:var(--paper2,#efe8d8);border-radius:100px;overflow:hidden;margin-bottom:16px;border:1px solid var(--line)}
-.growth-bar{height:100%;width:0%;border-radius:100px;background:linear-gradient(90deg,var(--gold),var(--gold-deep));transition:width 1.4s cubic-bezier(.16,1,.3,1)}
-.growth-item.in .growth-bar{width:calc(var(--pct, 0) * 1%)}
-.growth-bar.future-bar{background:repeating-linear-gradient(45deg,var(--gold) 0 8px,transparent 8px 16px);width:18%}
-.growth-item.in .growth-bar.future-bar{width:18%}
-.growth-sqft{font-family:var(--serif);font-size:1.7rem;font-weight:700;color:var(--charcoal);margin-bottom:10px}
-.growth-sqft .unit{font-size:1rem;font-weight:600;color:var(--muted)}
-.growth-sqft .plus-icon{font-size:1.7rem;color:var(--gold-deep)}
-.growth-item h4{font-size:1rem;margin-bottom:8px}
-.growth-item p{color:var(--muted);font-size:.85rem;line-height:1.55}
-.growth-item.future .growth-year{color:var(--muted)}
-</style>
 
 <!-- ============ GOOGLE REVIEWS ============ -->
 <section class="section paper" id="reviews">
@@ -602,36 +552,6 @@ const statIO=new IntersectionObserver((entries)=>{
   });
 },{threshold:.4});
 stats.forEach(el=>statIO.observe(el));
-
-// Growth timeline — animated bars + counters
-const growthItems=document.querySelectorAll('.growth-item');
-const growthIO=new IntersectionObserver((entries)=>{
-  entries.forEach(e=>{
-    if(!e.isIntersecting)return;
-    growthIO.unobserve(e.target);
-    const item=e.target;
-    const bar=item.querySelector('.growth-bar');
-    if(bar && !bar.classList.contains('future-bar')){
-      const max=parseFloat(bar.dataset.max)||4500;
-      const val=parseFloat(bar.dataset.value)||0;
-      const pct=Math.min(100,(val/max)*100);
-      item.style.setProperty('--pct',pct);
-    }
-    item.classList.add('in');
-    const counter=item.querySelector('.counter');
-    if(counter){
-      const target=parseFloat(counter.dataset.target)||0;
-      const dur=1400,t0=performance.now();
-      function tick(t){
-        const p=Math.min((t-t0)/dur,1); const e2=1-Math.pow(1-p,3);
-        counter.textContent=Math.round(target*e2);
-        if(p<1)requestAnimationFrame(tick);
-      }
-      requestAnimationFrame(tick);
-    }
-  });
-},{threshold:.35});
-growthItems.forEach(el=>growthIO.observe(el));
 
 // Style quiz
 let quizWho='';
