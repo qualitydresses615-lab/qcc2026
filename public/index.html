@@ -252,7 +252,21 @@ footer a:hover{color:var(--gold)}
 .cat-card,.review-card{transition:transform .3s var(--ease),box-shadow .3s var(--ease)}
 .cat-card:hover,.review-card:hover{transform:translateY(-4px);box-shadow:0 16px 32px rgba(38,34,29,.08)}
 .quiz-opt:focus-visible,.btn:focus-visible,.cat-card:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
-.contact-list .ic svg{width:20px;height:20px;display:block}
+/* ---- Department cards (merged category + 360 tour) ---- */
+.tour-tabs{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:14px;margin-bottom:28px}
+.tour-tab{position:relative;height:130px;border-radius:14px;border:2px solid transparent;background-size:cover;background-position:center 25%;cursor:pointer;overflow:hidden;padding:0;transition:transform .25s var(--ease),border-color .25s var(--ease)}
+.tour-tab::after{content:'';position:absolute;inset:0;background:linear-gradient(0deg,rgba(20,18,14,.75) 15%,rgba(20,18,14,.15) 60%,rgba(20,18,14,.05));transition:opacity .25s}
+.tour-tab span{position:absolute;left:14px;bottom:12px;z-index:1;color:#fff;font-weight:700;font-size:.9rem;font-family:var(--serif)}
+.tour-tab:hover{transform:translateY(-3px)}
+.tour-tab.active{border-color:var(--gold)}
+.tour-tab.active::after{background:linear-gradient(0deg,rgba(239,179,36,.55) 0%,rgba(20,18,14,.1) 70%)}
+@media(max-width:560px){.tour-tabs{grid-template-columns:repeat(2,1fr)}.tour-tab{height:100px}}
+.panorama-viewer{width:100%;height:460px;border-radius:var(--radius);overflow:hidden;background:var(--charcoal);position:relative;cursor:grab;touch-action:pan-y}
+.panorama-viewer.grabbing{cursor:grabbing}
+.panorama-viewer img{position:absolute;top:0;left:0;height:100%;width:auto;max-width:none;user-select:none;-webkit-user-drag:none}
+.pano-hint{position:absolute;bottom:16px;left:50%;transform:translateX(-50%);background:rgba(38,34,29,.65);color:#fff;font-size:.78rem;padding:8px 16px;border-radius:100px;pointer-events:none;transition:opacity .5s;backdrop-filter:blur(4px)}
+.pano-hint.hide{opacity:0}
+@media(max-width:700px){.panorama-viewer{height:300px}}
 </style>
 </head>
 <body>
@@ -288,7 +302,7 @@ footer a:hover{color:var(--gold)}
       <div class="stat"><div class="num" data-count="35">0</div><div class="lbl">Years, Since 1990</div></div>
       <div class="stat"><div class="num" data-count="4500" data-suffix="+">0</div><div class="lbl">Sq Ft Showroom</div></div>
       <div class="stat"><div class="num" data-count="5" data-suffix=" Lakh+">0</div><div class="lbl">Happy Customers</div></div>
-      <div class="stat"><div class="num" data-count="4" data-decimal="6">0</div><div class="lbl">Google Rating</div></div>
+      <div class="stat"><div class="num" data-count="4.8" data-decimal="1" data-suffix="+">0</div><div class="lbl">Google Rating</div></div>
     </div>
   </div>
 </section>
@@ -335,7 +349,31 @@ footer a:hover{color:var(--gold)}
     <div class="section-head">
       <span class="eyebrow">Our Story</span>
       <h2>A Family Business, Not Just a Store.</h2>
-      <p>Quality Dresses opened its doors in 1990 with one goal — bring honest quality and real style to every family in Bharuch. Three and a half decades later, that promise hasn't changed, even as the store has grown into a 4,500+ sq ft showroom carrying fashion for every member of the family.</p>
+      <p>In 1990, our family opened a small showroom on Railway Station Road with nothing but honest intentions and a promise — to dress every family in Bharuch with care, not just sell them clothes. There were no shortcuts, no gimmicks, just years of showing up, listening to what people actually needed, and treating every customer like family. That small beginning has grown into a 4,500+ sq ft showroom today, but the heart of it hasn't changed one bit. Three generations of Bharuch families have trusted us with their biggest days — weddings, festivals, first days of school — and every single one of those visits is why we still do this, 35 years later.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ FASHION FOR EVERY FAMILY MEMBER — MERGED WITH 360 TOUR ============ -->
+<section class="section paper" id="tour">
+  <div class="wrap">
+    <div class="section-head center">
+      <span class="eyebrow">Under One Roof</span>
+      <h2>Fashion For Every Family Member.</h2>
+      <p>Tap a department to step inside — drag the photo to look around.</p>
+    </div>
+    <div class="tour-tabs" role="tablist" aria-label="Choose a department to explore">
+      <button class="tour-tab active" data-img="/assets/tour/womens.jpg" style="background-image:url('/assets/tour/womens.jpg')" role="tab" aria-selected="true"><span>Women's</span></button>
+      <button class="tour-tab" data-img="/assets/tour/girls.jpg" style="background-image:url('/assets/tour/girls.jpg')" role="tab" aria-selected="false"><span>Girls'</span></button>
+      <button class="tour-tab" data-img="/assets/tour/mens-ethnic.jpg" style="background-image:url('/assets/tour/mens-ethnic.jpg')" role="tab" aria-selected="false"><span>Men's Ethnic</span></button>
+      <button class="tour-tab" data-img="/assets/tour/mens-formal.jpg" style="background-image:url('/assets/tour/mens-formal.jpg')" role="tab" aria-selected="false"><span>Men's Formal</span></button>
+      <button class="tour-tab" data-img="/assets/tour/mens-casual.jpg" style="background-image:url('/assets/tour/mens-casual.jpg')" role="tab" aria-selected="false"><span>Men's Casual</span></button>
+      <button class="tour-tab" data-img="/assets/tour/boys.jpg" style="background-image:url('/assets/tour/boys.jpg')" role="tab" aria-selected="false"><span>Boys'</span></button>
+      <button class="tour-tab" data-img="/assets/tour/accessories.jpg" style="background-image:url('/assets/tour/accessories.jpg')" role="tab" aria-selected="false"><span>Accessories</span></button>
+    </div>
+    <div id="panorama360" class="panorama-viewer">
+      <img id="panoImg" src="/assets/tour/womens.jpg" alt="Quality Dresses — Women's department" draggable="false">
+      <span class="pano-hint" id="panoHint">⟷ Drag to look around</span>
     </div>
   </div>
 </section>
@@ -373,60 +411,6 @@ footer a:hover{color:var(--gold)}
   </div>
 </section>
 
-<!-- ============ FIND YOUR LOOK — SIGNATURE QUIZ ============ -->
-<section class="section" id="quiz">
-  <div class="wrap">
-    <div class="section-head center">
-      <span class="eyebrow">Not Sure Where to Start?</span>
-      <h2>Find Your Look.</h2>
-      <p>Two taps, and we'll show you exactly where to look.</p>
-    </div>
-    <div class="quiz-box">
-      <div class="quiz-progress"><span class="active" id="qp1"></span><span id="qp2"></span></div>
-
-      <div class="quiz-step" id="quizStep1">
-        <div class="quiz-q">Who are you shopping for?</div>
-        <div class="quiz-opts">
-          <div class="quiz-opt" data-who="Men">Men</div>
-          <div class="quiz-opt" data-who="Women">Women</div>
-          <div class="quiz-opt" data-who="Kids">Kids</div>
-        </div>
-      </div>
-
-      <div class="quiz-step" id="quizStep2" style="display:none">
-        <div class="quiz-q">What's the occasion?</div>
-        <div class="quiz-opts">
-          <div class="quiz-opt" data-occ="Ethnic">Ethnic</div>
-          <div class="quiz-opt" data-occ="Casual">Casual</div>
-          <div class="quiz-opt" data-occ="Formal">Formal</div>
-        </div>
-      </div>
-
-      <div class="quiz-result" id="quizResult">
-        <h3><span id="qrTitle"></span></h3>
-        <p>Our team has this ready and waiting for you at the showroom.</p>
-        <a href="#location" class="btn btn-gold">Visit Us for This Collection</a>
-        <div style="margin-top:14px"><a href="#" onclick="resetQuiz();return false;" style="font-size:.85rem;color:#C9C1AE">Start over</a></div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ============ WHAT WE OFFER ============ -->
-<section class="section paper">
-  <div class="wrap">
-    <div class="section-head center">
-      <span class="eyebrow">Under One Roof</span>
-      <h2>Fashion For Every Family Member.</h2>
-    </div>
-    <div class="cat-grid">
-      <div class="cat-card"><h4>Men's</h4><p>Ethnic, casual &amp; formal wear</p></div>
-      <div class="cat-card"><h4>Women's</h4><p>Ethnic, casual &amp; formal wear</p></div>
-      <div class="cat-card"><h4>Boys'</h4><p>Ethnic, casual &amp; formal wear</p></div>
-      <div class="cat-card"><h4>Girls'</h4><p>Ethnic, casual &amp; formal wear</p></div>
-    </div>
-  </div>
-</section>
 
 <!-- ============ FOLLOW US ============ -->
 <section class="section paper">
@@ -513,6 +497,60 @@ footer a:hover{color:var(--gold)}
 </footer>
 
 <script>
+// Department tour — drag-to-pan viewer
+(function(){
+  const tabs=document.querySelectorAll('.tour-tab');
+  const wrap=document.getElementById('panorama360');
+  const img=document.getElementById('panoImg');
+  const hint=document.getElementById('panoHint');
+  if(!tabs.length||!wrap||!img)return;
+
+  let offsetX=0,maxOffset=0,dragging=false,startX=0,startOffset=0;
+
+  function computeBounds(){
+    maxOffset=Math.max(0,img.offsetWidth-wrap.offsetWidth);
+    offsetX=Math.min(0,Math.max(-maxOffset,offsetX));
+    img.style.left=offsetX+'px';
+  }
+  function setImage(src,alt){
+    img.style.opacity='0';
+    const temp=new Image();
+    temp.onload=()=>{
+      img.src=src; if(alt)img.alt=alt;
+      offsetX=0; img.style.left='0px';
+      requestAnimationFrame(()=>{computeBounds();img.style.opacity='1';});
+    };
+    temp.src=src;
+  }
+  function dragStart(x){dragging=true;startX=x;startOffset=offsetX;wrap.classList.add('grabbing');if(hint)hint.classList.add('hide');}
+  function dragMove(x){
+    if(!dragging)return;
+    offsetX=Math.min(0,Math.max(-maxOffset,startOffset+(x-startX)));
+    img.style.left=offsetX+'px';
+  }
+  function dragEnd(){dragging=false;wrap.classList.remove('grabbing');}
+
+  wrap.addEventListener('mousedown',e=>{dragStart(e.clientX);e.preventDefault();});
+  window.addEventListener('mousemove',e=>dragMove(e.clientX));
+  window.addEventListener('mouseup',dragEnd);
+  wrap.addEventListener('touchstart',e=>dragStart(e.touches[0].clientX),{passive:true});
+  wrap.addEventListener('touchmove',e=>dragMove(e.touches[0].clientX),{passive:true});
+  wrap.addEventListener('touchend',dragEnd);
+  window.addEventListener('resize',computeBounds);
+
+  tabs.forEach(tab=>{
+    tab.addEventListener('click',()=>{
+      tabs.forEach(t=>{t.classList.remove('active');t.setAttribute('aria-selected','false')});
+      tab.classList.add('active');
+      tab.setAttribute('aria-selected','true');
+      setImage(tab.dataset.img,'Quality Dresses — '+tab.textContent+' department');
+    });
+  });
+  img.addEventListener('load',computeBounds);
+  computeBounds();
+})();
+</script>
+<script>
 // Mobile nav toggle
 const navToggle=document.getElementById('navToggle');
 const siteNav=document.getElementById('siteNav');
@@ -552,30 +590,6 @@ const statIO=new IntersectionObserver((entries)=>{
   });
 },{threshold:.4});
 stats.forEach(el=>statIO.observe(el));
-
-// Style quiz
-let quizWho='';
-document.querySelectorAll('[data-who]').forEach(el=>{
-  el.onclick=()=>{
-    quizWho=el.dataset.who;
-    document.getElementById('quizStep1').style.display='none';
-    document.getElementById('quizStep2').style.display='block';
-    document.getElementById('qp2').classList.add('active');
-  };
-});
-document.querySelectorAll('[data-occ]').forEach(el=>{
-  el.onclick=()=>{
-    const occ=el.dataset.occ;
-    document.getElementById('quizStep2').style.display='none';
-    document.getElementById('qrTitle').textContent=`${quizWho}'s ${occ} Wear`;
-    document.getElementById('quizResult').classList.add('show');
-  };
-});
-function resetQuiz(){
-  document.getElementById('quizResult').classList.remove('show');
-  document.getElementById('qp2').classList.remove('active');
-  document.getElementById('quizStep1').style.display='block';
-}
 
 // Live Google reviews — replaces the sample cards if the API call succeeds.
 // If it fails (key not set yet, quota, network), the sample cards stay
