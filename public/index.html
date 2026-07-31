@@ -176,21 +176,14 @@ nav a:hover{color:var(--gold-deep)}
 .cat-card h4{font-size:1.15rem;margin-bottom:10px}
 .cat-card p{color:var(--muted);font-size:.88rem}
 
-/* ---- Now strip (sale + QCC) ---- */
-.now-grid{display:grid;grid-template-columns:1.3fr 1fr;gap:24px}
-@media(max-width:760px){.now-grid{grid-template-columns:1fr}}
-.now-card{border-radius:var(--radius);padding:36px;position:relative;overflow:hidden}
-.now-card.sale{background:linear-gradient(135deg,rgba(239,179,36,.22),var(--paper));border:1px solid rgba(239,179,36,.5)}
-.now-card.qcc{background:var(--charcoal);color:var(--cream);display:flex;flex-direction:column;justify-content:center}
-.now-card.qcc p{color:#C9C1AE}
-.now-card h3{font-size:1.5rem;margin-bottom:10px}
-.now-card.sale p{color:var(--charcoal);opacity:.75;font-size:.92rem;margin-bottom:20px}
-.soon-badge{display:inline-block;font-size:.68rem;letter-spacing:.08em;text-transform:uppercase;color:var(--charcoal);background:var(--gold);padding:4px 12px;border-radius:100px;font-weight:700;margin-bottom:14px;width:fit-content}
-
-/* ---- Instagram grid ---- */
-.insta-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:6px}
-@media(min-width:700px){.insta-grid{grid-template-columns:repeat(6,1fr)}}
-.insta-grid .placeholder-img{aspect-ratio:1/1;min-height:0;font-size:.65rem;border-radius:6px}
+/* ---- Follow Us: big social cards ---- */
+.social-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:24px;max-width:640px;margin:0 auto}
+.social-card{display:flex;flex-direction:column;align-items:center;gap:10px;padding:40px 24px;border-radius:var(--radius);color:#fff;transition:transform .3s var(--ease),box-shadow .3s var(--ease)}
+.social-card:hover{transform:translateY(-4px);box-shadow:0 16px 32px rgba(38,34,29,.18)}
+.social-card.ig{background:linear-gradient(135deg,#f9ce34,#ee2a7b 55%,#6228d7)}
+.social-card.fb{background:#1877F2}
+.social-name{font-family:var(--serif);font-size:1.3rem;font-weight:600}
+.social-handle{font-size:.9rem;opacity:.92}
 
 /* ---- Map / contact ---- */
 .contact-grid{display:grid;grid-template-columns:1fr 1fr;gap:32px}
@@ -258,8 +251,6 @@ footer a:hover{color:var(--gold)}
 /* ---- Card hover polish / micro-interactions ---- */
 .cat-card,.review-card{transition:transform .3s var(--ease),box-shadow .3s var(--ease)}
 .cat-card:hover,.review-card:hover{transform:translateY(-4px);box-shadow:0 16px 32px rgba(38,34,29,.08)}
-.now-card.sale{transition:transform .3s var(--ease),box-shadow .3s var(--ease)}
-.now-card.sale:hover{transform:translateY(-4px);box-shadow:0 16px 32px rgba(239,179,36,.18)}
 .quiz-opt:focus-visible,.btn:focus-visible,.cat-card:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
 .contact-list .ic svg{width:20px;height:20px;display:block}
 </style>
@@ -273,7 +264,6 @@ footer a:hover{color:var(--gold)}
     <nav id="siteNav">
       <a href="#why">Why Us</a>
       <a href="#about">About</a>
-      <a href="#now">Offers</a>
       <a href="#reviews">Reviews</a>
       <a href="#location">Visit Us</a>
     </nav>
@@ -438,42 +428,24 @@ footer a:hover{color:var(--gold)}
   </div>
 </section>
 
-<!-- ============ WHAT'S HAPPENING NOW ============ -->
-<section class="section" id="now">
-  <div class="wrap">
-    <div class="section-head center">
-      <span class="eyebrow">Right Now</span>
-      <h2>What's Happening At Quality Dresses.</h2>
-    </div>
-    <div class="now-grid">
-      <div class="now-card sale">
-        <h3>🔥 Quality Days Sale</h3>
-        <p>Up to 50% off across the store. Style more, save more — visit before it ends.</p>
-        <a href="#location" class="btn btn-gold" style="font-size:.85rem;padding:12px 24px">Visit The Sale</a>
-      </div>
-      <div class="now-card qcc">
-        <span class="soon-badge">Coming Soon</span>
-        <h3>QCC 2026</h3>
-        <p>Quality Creator Challenge is on its way — Bharuch's own content creator contest, ₹40,000+ in prizes.</p>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ============ INSTAGRAM ============ -->
+<!-- ============ FOLLOW US ============ -->
 <section class="section paper">
   <div class="wrap">
     <div class="section-head center">
       <span class="eyebrow">Follow Along</span>
       <h2>Life At @qualitydresses</h2>
     </div>
-    <div class="insta-grid" id="instaGrid">
-      <div class="placeholder-img">IG Post</div>
-      <div class="placeholder-img">IG Post</div>
-      <div class="placeholder-img">IG Post</div>
-      <div class="placeholder-img">IG Post</div>
-      <div class="placeholder-img">IG Post</div>
-      <div class="placeholder-img">IG Post</div>
+    <div class="social-grid">
+      <a href="https://www.instagram.com/qualitydresses90" target="_blank" rel="noopener" class="social-card ig">
+        <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="2.5" y="2.5" width="19" height="19" rx="5"/><circle cx="12" cy="12" r="4.5"/><circle cx="17.3" cy="6.7" r="1.1" fill="currentColor" stroke="none"/></svg>
+        <span class="social-name">Instagram</span>
+        <span class="social-handle">@qualitydresses90</span>
+      </a>
+      <a href="https://www.facebook.com/profile.php?id=100063839121195" target="_blank" rel="noopener" class="social-card fb">
+        <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M18 3h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3.3l.7-4H14V8a1 1 0 0 1 1-1h3z"/></svg>
+        <span class="social-name">Facebook</span>
+        <span class="social-handle">Quality Dresses</span>
+      </a>
     </div>
   </div>
 </section>
@@ -522,7 +494,7 @@ footer a:hover{color:var(--gold)}
       <div>
         <h5>Explore</h5>
         <a href="#about">About Us</a>
-        <a href="#now">Offers &amp; QCC</a>
+        <a href="#why">Why Us</a>
         <a href="#reviews">Reviews</a>
       </div>
       <div>
