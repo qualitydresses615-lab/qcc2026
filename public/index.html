@@ -58,25 +58,27 @@
 </script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Petrona:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600;1,700&family=Work+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
 /* ============ DESIGN TOKENS — grounded in the real storefront & logo ============ */
 :root{
-  --cream:#F6F1E6;        /* main background — sampled warm off-white, no black */
+  --cream:#F3EDE1;        /* bone/paper background */
   --paper:#FFFFFF;
-  --charcoal:#26221D;     /* ink/text — warm near-black, not pure black */
+  --charcoal:#241F1C;     /* ink/text — warm inky near-black */
   --slate:#78858E;        /* real sampled colour from the building facade stripes */
   --tan:#C9AE87;          /* real building facade tan/beige stripe */
-  --gold:#EFB324;         /* signage gold, from the real "Quality" wordmark */
-  --gold-deep:#C98F16;
+  --gold:#1F3A5F;         /* brand indigo — variable kept as --gold for compatibility */
+  --gold-deep:#17293F;
+  --rani:#A33F4D;         /* deep madder red — secondary accent */
+  --turmeric:#D9A441;     /* muted gold-turmeric — small accent details only, not button fills */
   --red:#C22A2E;          /* crown + DRESSES banner red */
   --green:#3C6B47;        /* heritage green, from the original logo artwork */
-  --line:rgba(38,34,29,.12);
+  --line:rgba(36,31,28,.14);
   --muted:#6B6459;
   --radius:16px;
   --ease:cubic-bezier(.16,1,.3,1);
-  --serif:'Fraunces',serif;
-  --sans:'Inter',sans-serif;
+  --serif:'Petrona',serif;
+  --sans:'Work Sans',sans-serif;
 }
 *{box-sizing:border-box;margin:0;padding:0}
 html{scroll-behavior:smooth}
@@ -95,7 +97,7 @@ h1,h2,h3,h4{font-family:var(--serif);font-weight:600;letter-spacing:-.01em;color
 .section-head h2{font-size:clamp(1.9rem,4vw,2.6rem);margin-bottom:14px}
 .section-head p{color:var(--muted);font-size:1.05rem}
 .btn{display:inline-flex;align-items:center;gap:10px;padding:15px 30px;border-radius:100px;font-weight:700;font-size:.95rem;border:none;cursor:pointer;transition:transform .3s var(--ease)}
-.btn-gold{background:linear-gradient(90deg,var(--gold),var(--gold-deep));color:var(--charcoal)}
+.btn-gold{background:linear-gradient(90deg,var(--gold),var(--gold-deep));color:var(--cream)}
 .btn-gold:hover{transform:translateY(-2px)}
 .btn-red{background:var(--red);color:#fff}
 .btn-red:hover{transform:translateY(-2px)}
@@ -103,26 +105,29 @@ h1,h2,h3,h4{font-family:var(--serif);font-weight:600;letter-spacing:-.01em;color
 .btn-ghost:hover{background:var(--charcoal);color:var(--cream)}
 
 /* ---- Signature motif: the real building's striped facade, as a divider ---- */
-.stripe-divider{height:22px;display:flex}
-.stripe-divider span{flex:1}
-.stripe-divider span:nth-child(4n+1){background:var(--slate)}
-.stripe-divider span:nth-child(4n+2){background:var(--tan)}
-.stripe-divider span:nth-child(4n+3){background:var(--cream)}
-.stripe-divider span:nth-child(4n+4){background:var(--slate)}
+/* ---- Signature motif: "Fabric Stack" — irregular-width colour blocks,
+   like bolts of cloth stacked edge-on on a shelf. Used everywhere the
+   old even-striped divider used to be. ---- */
+.fabric-stack{height:13px;display:flex;overflow:hidden}
+.fabric-stack span{height:100%;flex:0 0 auto}
+.fabric-stack span:nth-child(4n+1){background:var(--gold)}
+.fabric-stack span:nth-child(4n+2){background:var(--rani)}
+.fabric-stack span:nth-child(4n+3){background:var(--turmeric)}
+.fabric-stack span:nth-child(4n+4){background:var(--cream)}
 
 /* ---- Header ---- */
 :root{--banner-h:0px}
 header{position:fixed;top:var(--banner-h);left:0;right:0;z-index:100;padding:14px 0;background:rgba(246,241,230,.88);backdrop-filter:blur(14px);border-bottom:1px solid var(--line);transition:top .3s var(--ease)}
 
 /* ---- Festival banner ---- */
-.festival-banner{position:fixed;top:0;left:0;right:0;z-index:110;background:var(--charcoal);color:#fff;font-size:.82rem;font-weight:600;text-align:center;padding:10px 42px;display:flex;align-items:center;justify-content:center;gap:8px;flex-wrap:wrap}
-.festival-banner-close{position:absolute;right:10px;top:50%;transform:translateY(-50%);background:none;border:none;color:#fff;font-size:1.15rem;line-height:1;cursor:pointer;padding:4px 8px;opacity:.75}
+.festival-banner{position:fixed;top:0;left:0;right:0;z-index:110;background:var(--charcoal);color:var(--cream);font-family:var(--sans);font-size:.8rem;font-weight:500;letter-spacing:.02em;text-align:center;padding:13px 48px;display:flex;align-items:center;justify-content:center;gap:10px;flex-wrap:wrap;border-bottom:1px solid rgba(243,237,225,.12)}
+.festival-banner-close{position:absolute;right:14px;top:50%;transform:translateY(-50%);background:none;border:none;color:var(--cream);font-size:1.05rem;line-height:1;cursor:pointer;padding:6px 10px;opacity:.65;transition:opacity .2s var(--ease)}
 .festival-banner-close:hover{opacity:1}
 .festival-overlay{position:absolute;z-index:1;opacity:.78;pointer-events:none}
 .festival-overlay svg{display:block}
 .fo-top-right{top:calc(100px + var(--banner-h) + 20px);right:28px}
-.fo-bottom-left{bottom:96px;left:26px;filter:drop-shadow(0 0 10px rgba(239,179,36,.55))}
-.fo-bottom-right{bottom:96px;right:26px;filter:drop-shadow(0 0 10px rgba(239,179,36,.55))}
+.fo-bottom-left{bottom:96px;left:26px;filter:drop-shadow(0 0 10px rgba(217,164,65,.55))}
+.fo-bottom-right{bottom:96px;right:26px;filter:drop-shadow(0 0 10px rgba(217,164,65,.55))}
 .fo-edge-a{top:calc(100px + var(--banner-h) + 50px);left:24px;transform:rotate(-10deg)}
 .fo-edge-b{top:calc(100px + var(--banner-h) + 130px);right:32px;transform:rotate(12deg)}
 .fo-edge-c{bottom:170px;left:56px;transform:rotate(6deg)}
@@ -134,21 +139,21 @@ nav a:hover{color:var(--gold-deep)}
 @media(max-width:800px){nav{display:none}}
 .header-actions{display:flex;align-items:center;gap:12px}
 .lang-toggle{display:inline-flex;align-items:center;padding:9px 18px;border-radius:100px;border:1.5px solid var(--charcoal);background:transparent;color:var(--charcoal);font-weight:700;font-size:.8rem;cursor:pointer;transition:.25s var(--ease)}
-.lang-toggle:hover{background:var(--gold);border-color:var(--gold);color:var(--charcoal)}
+.lang-toggle:hover{background:var(--gold);border-color:var(--gold);color:var(--cream)}
 @media(max-width:800px){.lang-toggle{padding:7px 14px;font-size:.72rem}}
 
 /* ---- Hero (real storefront photo) ---- */
 .hero{position:relative;min-height:100vh;display:flex;align-items:flex-end;padding-top:calc(100px + var(--banner-h));transition:padding-top .3s var(--ease)}
 .hero-bg{position:absolute;inset:0;z-index:0}
 .hero-bg img,.hero-bg video{width:100%;height:100%;object-fit:cover;object-position:center 25%;display:block}
-.hero-bg::after{content:'';position:absolute;inset:0;background:linear-gradient(0deg,rgba(38,34,29,.88) 10%,rgba(38,34,29,.55) 45%,rgba(38,34,29,.25) 75%,rgba(38,34,29,.1))}
+.hero-bg::after{content:'';position:absolute;inset:0;background:linear-gradient(0deg,rgba(36,31,28,.88) 10%,rgba(36,31,28,.55) 45%,rgba(36,31,28,.25) 75%,rgba(36,31,28,.1))}
 .hero .wrap{position:relative;z-index:2;padding-bottom:64px}
 .hero h1{font-size:clamp(2.2rem,5.6vw,4rem);line-height:1.06;margin-bottom:18px;max-width:820px;color:#fff}
 .hero p.sub{font-size:1.1rem;color:#EAE3D3;max-width:52ch;margin-bottom:30px}
 .hero-ctas{display:flex;gap:16px;flex-wrap:wrap;margin-bottom:44px}
 .stat-strip{display:flex;gap:0;flex-wrap:wrap;border-top:1px solid rgba(255,255,255,.25);padding-top:26px}
 .stat{flex:1;min-width:140px;padding-right:24px}
-.stat .num{font-family:var(--serif);font-size:2.1rem;color:var(--gold);font-weight:600}
+.stat .num{font-family:var(--serif);font-size:2.1rem;color:var(--turmeric);font-weight:600}
 .stat .lbl{font-size:.8rem;color:#DCD3BE;text-transform:uppercase;letter-spacing:.06em;margin-top:4px}
 
 /* ---- Reviews ---- */
@@ -158,7 +163,7 @@ nav a:hover{color:var(--gold-deep)}
 .review-card .stars{color:var(--gold-deep);font-size:.95rem;margin-bottom:14px;letter-spacing:2px}
 .review-card p{color:var(--charcoal);font-size:.92rem;line-height:1.6;margin-bottom:18px}
 .review-card .who{display:flex;align-items:center;gap:10px;font-size:.85rem;font-weight:600}
-.review-card .avatar{width:34px;height:34px;border-radius:50%;background:linear-gradient(135deg,var(--gold),var(--gold-deep));display:flex;align-items:center;justify-content:center;color:var(--charcoal);font-weight:700;font-size:.8rem}
+.review-card .avatar{width:34px;height:34px;border-radius:50%;background:linear-gradient(135deg,var(--gold),var(--gold-deep));display:flex;align-items:center;justify-content:center;color:var(--cream);font-weight:700;font-size:.8rem}
 .review-tag{font-size:.65rem;color:var(--muted);text-transform:uppercase;letter-spacing:.05em;border:1px solid var(--line);border-radius:100px;padding:3px 10px;display:inline-block;margin-top:12px}
 .gbadge{display:inline-flex;align-items:center;gap:10px;background:var(--cream);border:1px solid var(--line);border-radius:100px;padding:10px 20px;font-size:.9rem;margin-bottom:32px;font-weight:600}
 .gbadge .stars{color:var(--gold-deep)}
@@ -166,7 +171,7 @@ nav a:hover{color:var(--gold-deep)}
 /* ---- Follow Us: big social cards ---- */
 .social-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:24px;max-width:640px;margin:0 auto}
 .social-card{display:flex;flex-direction:column;align-items:center;gap:10px;padding:40px 24px;border-radius:var(--radius);color:#fff;transition:transform .3s var(--ease),box-shadow .3s var(--ease)}
-.social-card:hover{transform:translateY(-4px);box-shadow:0 16px 32px rgba(38,34,29,.18)}
+.social-card:hover{transform:translateY(-4px);box-shadow:0 16px 32px rgba(36,31,28,.18)}
 .social-card.ig{background:linear-gradient(135deg,#f9ce34,#ee2a7b 55%,#6228d7)}
 .social-card.fb{background:#1877F2}
 .social-name{font-family:var(--serif);font-size:1.3rem;font-weight:600}
@@ -183,9 +188,9 @@ nav a:hover{color:var(--gold-deep)}
 
 /* ---- Sticky WhatsApp ---- */
 .wa-float{position:fixed;bottom:24px;right:24px;z-index:90;width:58px;height:58px;border-radius:50%;
-  background:#25D366;display:flex;align-items:center;justify-content:center;box-shadow:0 10px 30px rgba(38,34,29,.35);
+  background:#25D366;display:flex;align-items:center;justify-content:center;box-shadow:0 10px 30px rgba(36,31,28,.35);
   animation:pulse 2.4s infinite}
-@keyframes pulse{0%,100%{box-shadow:0 10px 30px rgba(38,34,29,.35)}50%{box-shadow:0 10px 30px rgba(37,211,102,.5)}}
+@keyframes pulse{0%,100%{box-shadow:0 10px 30px rgba(36,31,28,.35)}50%{box-shadow:0 10px 30px rgba(37,211,102,.5)}}
 
 footer{background:var(--charcoal);color:#C9C1AE;padding:56px 0 28px}
 footer .foot-grid{display:grid;grid-template-columns:2fr 1fr 1fr;gap:40px;margin-bottom:40px}
@@ -193,14 +198,14 @@ footer .foot-grid{display:grid;grid-template-columns:2fr 1fr 1fr;gap:40px;margin
 footer .logo img{height:38px;margin-bottom:14px;filter:brightness(0) invert(1) opacity(.9)}
 footer h5{color:#fff;font-size:.85rem;text-transform:uppercase;letter-spacing:.06em;margin-bottom:16px}
 footer a{display:block;color:#C9C1AE;font-size:.9rem;padding:6px 0}
-footer a:hover{color:var(--gold)}
+footer a:hover{color:var(--turmeric)}
 .foot-bottom{border-top:1px solid rgba(246,241,230,.15);padding-top:24px;font-size:.8rem;display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px}
 
 .rev{opacity:0;transform:translateY(24px);transition:opacity .8s var(--ease),transform .8s var(--ease)}
 .rev.in{opacity:1;transform:translateY(0)}
 
 /* ---- Accessibility: skip link ---- */
-.skip-link{position:absolute;left:-999px;top:0;background:var(--gold);color:var(--charcoal);padding:12px 20px;z-index:200;font-weight:700;border-radius:0 0 8px 0}
+.skip-link{position:absolute;left:-999px;top:0;background:var(--gold);color:var(--cream);padding:12px 20px;z-index:200;font-weight:700;border-radius:0 0 8px 0}
 .skip-link:focus{left:0}
 
 /* ---- Mobile nav ---- */
@@ -211,7 +216,7 @@ footer a:hover{color:var(--gold)}
 .nav-toggle[aria-expanded="true"] span:nth-child(3){transform:translateY(-7px) rotate(-45deg)}
 @media(max-width:800px){
   .nav-toggle{display:block}
-  nav{display:none;position:fixed;top:calc(72px + var(--banner-h));left:0;right:0;background:var(--paper);flex-direction:column;gap:0;padding:8px 24px 20px;border-bottom:1px solid var(--line);box-shadow:0 16px 28px rgba(38,34,29,.1)}
+  nav{display:none;position:fixed;top:calc(72px + var(--banner-h));left:0;right:0;background:var(--paper);flex-direction:column;gap:0;padding:8px 24px 20px;border-bottom:1px solid var(--line);box-shadow:0 16px 28px rgba(36,31,28,.1)}
   nav.open{display:flex}
   nav a{padding:15px 0;border-bottom:1px solid var(--line)}
   .header-actions>.btn-gold{display:none}
@@ -222,7 +227,7 @@ footer a:hover{color:var(--gold)}
 .mobile-bar a{flex:1;text-align:center;padding:11px 6px;border-radius:12px;font-size:.72rem;font-weight:700;display:flex;flex-direction:column;align-items:center;gap:4px;color:#fff}
 .mobile-bar a.call{background:rgba(246,241,230,.12)}
 .mobile-bar a.wa{background:#25D366}
-.mobile-bar a.dir{background:var(--gold);color:var(--charcoal)}
+.mobile-bar a.dir{background:var(--gold);color:var(--cream)}
 @media(max-width:800px){.mobile-bar{display:flex}body{padding-bottom:76px}.wa-float{display:none}}
 
 .btn-wa{background:#25D366;color:#fff}
@@ -231,14 +236,14 @@ footer a:hover{color:var(--gold)}
 /* ---- Why Choose Us ---- */
 .why-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:32px}
 .why-card{text-align:center}
-.why-ic{width:56px;height:56px;border-radius:50%;background:linear-gradient(135deg,var(--gold),var(--gold-deep));display:flex;align-items:center;justify-content:center;margin:0 auto 18px;color:var(--charcoal)}
+.why-ic{width:56px;height:56px;border-radius:50%;background:linear-gradient(135deg,var(--gold),var(--gold-deep));display:flex;align-items:center;justify-content:center;margin:0 auto 18px;color:var(--cream)}
 .why-card h4{font-size:1.05rem;margin-bottom:8px}
 .why-card p{color:var(--muted);font-size:.88rem;line-height:1.6}
 
 /* ---- Card hover polish / micro-interactions ---- */
 .review-card{transition:transform .3s var(--ease),box-shadow .3s var(--ease)}
-.review-card:hover{transform:translateY(-4px);box-shadow:0 16px 32px rgba(38,34,29,.08)}
-.btn:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
+.review-card:hover{transform:translateY(-4px);box-shadow:0 16px 32px rgba(36,31,28,.08)}
+.btn:focus-visible{outline:2px solid var(--turmeric);outline-offset:2px}
 /* ---- Department cards (merged category + 360 tour) ---- */
 .tour-tabs{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:14px;margin-bottom:28px}
 .tour-tab{position:relative;height:130px;border-radius:14px;border:2px solid transparent;background-size:cover;background-position:center 25%;cursor:pointer;overflow:hidden;padding:0;transition:transform .25s var(--ease),border-color .25s var(--ease)}
@@ -246,12 +251,12 @@ footer a:hover{color:var(--gold)}
 .tour-tab span{position:absolute;left:14px;bottom:12px;z-index:1;color:#fff;font-weight:700;font-size:.9rem;font-family:var(--serif)}
 .tour-tab:hover{transform:translateY(-3px)}
 .tour-tab.active{border-color:var(--gold)}
-.tour-tab.active::after{background:linear-gradient(0deg,rgba(239,179,36,.55) 0%,rgba(20,18,14,.1) 70%)}
+.tour-tab.active::after{background:linear-gradient(0deg,rgba(217,164,65,.55) 0%,rgba(20,18,14,.1) 70%)}
 @media(max-width:560px){.tour-tabs{grid-template-columns:repeat(2,1fr)}.tour-tab{height:100px}}
 .panorama-viewer{width:100%;height:460px;border-radius:var(--radius);overflow:hidden;background:var(--charcoal);position:relative;cursor:grab;touch-action:pan-y}
 .panorama-viewer.grabbing{cursor:grabbing}
 .panorama-viewer img{position:absolute;top:0;left:0;height:100%;width:auto;max-width:none;user-select:none;-webkit-user-drag:none}
-.pano-hint{position:absolute;bottom:16px;left:50%;transform:translateX(-50%);background:rgba(38,34,29,.65);color:#fff;font-size:.78rem;padding:8px 16px;border-radius:100px;pointer-events:none;transition:opacity .5s;backdrop-filter:blur(4px)}
+.pano-hint{position:absolute;bottom:16px;left:50%;transform:translateX(-50%);background:rgba(36,31,28,.65);color:#fff;font-size:.78rem;padding:8px 16px;border-radius:100px;pointer-events:none;transition:opacity .5s;backdrop-filter:blur(4px)}
 .pano-hint.hide{opacity:0}
 @media(max-width:700px){.panorama-viewer{height:300px}}
 </style>
@@ -304,7 +309,7 @@ src="https://www.facebook.com/tr?id=1586602889631592&ev=PageView&noscript=1"
 <section class="hero">
   <div class="hero-bg"><video autoplay muted loop playsinline preload="metadata" poster="/assets/hero-poster.jpg" aria-hidden="true"><source src="/assets/hero.mp4" type="video/mp4"><img src="/assets/hero-poster.jpg" alt="Quality Dresses showroom, Railway Station Road, Bharuch"></video></div>
   <div class="wrap">
-    <span class="eyebrow rev in" style="color:var(--gold)"><a href="https://www.instagram.com/qualitydresses90" target="_blank" rel="noopener" style="color:inherit;text-decoration:none" data-gu="ભરૂચનો સૌથી વિશ્વસનીય ફેશન શોરૂમ, 1990 થી">Bharuch's Most Trusted Fashion Showroom Since 1990</a></span>
+    <span class="eyebrow rev in" style="color:var(--turmeric)"><a href="https://www.instagram.com/qualitydresses90" target="_blank" rel="noopener" style="color:inherit;text-decoration:none" data-gu="ભરૂચનો સૌથી વિશ્વસનીય ફેશન શોરૂમ, 1990 થી">Bharuch's Most Trusted Fashion Showroom Since 1990</a></span>
     <h1 class="rev in"><a href="https://www.instagram.com/qualitydresses90" target="_blank" rel="noopener" style="color:inherit;text-decoration:none" data-gu="એક શોરૂમ. દરેક પ્રસંગ. આખો પરિવાર.">One Showroom. Every Occasion. The Whole Family.</a></h1>
     <p class="sub rev in"><a href="https://www.instagram.com/qualitydresses90" target="_blank" rel="noopener" style="color:inherit;text-decoration:none" data-gu="4,500+ ચોરસ ફૂટમાં પુરુષો, મહિલાઓ, છોકરાઓ અને છોકરીઓ માટે ફેશન — પરંપરાગત, કેઝ્યુઅલ અને ફોર્મલ — ત્રણ પેઢીઓથી ભરૂચને પહેરાવનારા લોકો દ્વારા તૈયાર.">4,500+ sq ft of Men's, Women's, Boys' &amp; Girls' fashion — ethnic, casual, and formal — curated by people who've dressed Bharuch for three generations.</a></p>
     <div class="hero-ctas rev in">
@@ -321,7 +326,7 @@ src="https://www.facebook.com/tr?id=1586602889631592&ev=PageView&noscript=1"
   </div>
 </section>
 
-<div class="stripe-divider"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div>
+<div class="fabric-stack"><span style="width:6%"></span><span style="width:3%"></span><span style="width:9%"></span><span style="width:5%"></span><span style="width:12%"></span><span style="width:4%"></span><span style="width:7%"></span><span style="width:10%"></span><span style="width:3%"></span><span style="width:8%"></span><span style="width:5%"></span><span style="width:11%"></span><span style="width:4%"></span><span style="width:13%"></span></div>
 
 <main id="main">
 
@@ -586,26 +591,26 @@ src="https://www.facebook.com/tr?id=1586602889631592&ev=PageView&noscript=1"
 // regardless of date, e.g. ?festival=diwali — matches any festival
 // whose name contains the given text (case-insensitive). An unknown
 // name shows the normal default theme, not the date-based one.
-const BUNTING_SVG='<svg viewBox="0 0 56 34" width="52" height="32" xmlns="http://www.w3.org/2000/svg"><path d="M2 3 L54 3" stroke="#fff" stroke-width="1.2" opacity=".55"/><path d="M4 3 L14 3 L9 16 Z" fill="#FF9933"/><path d="M18 3 L28 3 L23 18 Z" fill="#F6F1E6"/><path d="M32 3 L42 3 L37 15 Z" fill="#138808"/></svg>';
-const KITE_SVG='<svg viewBox="0 0 36 44" width="34" height="40" xmlns="http://www.w3.org/2000/svg"><path d="M18 2 L33 20 L18 42 L3 20 Z" fill="#3E7CB1" fill-opacity=".85"/><path d="M18 2 L18 42 M3 20 L33 20" stroke="#fff" stroke-width="1"/><path d="M18 42 Q21 46 18 50 Q15 46 18 42" stroke="#D9711F" stroke-width="1.4" fill="none"/></svg>';
-const DIYA_SVG='<svg viewBox="0 0 44 40" width="40" height="36" xmlns="http://www.w3.org/2000/svg"><ellipse cx="22" cy="28" rx="18" ry="7" fill="#A11E22"/><ellipse cx="22" cy="25" rx="13" ry="4.5" fill="#EFB324"/><path d="M22 19 C19 13 22 9 22 9 C22 9 25 13 22 19 Z" fill="#FFB74D"/><path d="M22 15 C20.5 12 22 9.5 22 9.5 C22 9.5 23.5 12 22 15 Z" fill="#FFF3C4"/></svg>';
-const RAKHI_SVG='<svg viewBox="0 0 40 44" width="36" height="40" xmlns="http://www.w3.org/2000/svg"><circle cx="20" cy="15" r="9" fill="none" stroke="#D9A400" stroke-width="2.5"/><circle cx="20" cy="15" r="4" fill="#C9302C"/><path d="M20 24 L14 40 M20 24 L26 40 M20 24 L20 41" stroke="#D9A400" stroke-width="1.4" stroke-linecap="round"/></svg>';
-const DANDIYA_SVG='<svg viewBox="0 0 40 44" width="36" height="40" xmlns="http://www.w3.org/2000/svg"><line x1="11" y1="4" x2="29" y2="40" stroke="#A11E22" stroke-width="4" stroke-linecap="round"/><line x1="29" y1="4" x2="11" y2="40" stroke="#EFB324" stroke-width="4" stroke-linecap="round"/><circle cx="11" cy="4" r="2.5" fill="#A11E22"/><circle cx="29" cy="4" r="2.5" fill="#EFB324"/></svg>';
+const BUNTING_SVG='<svg viewBox="0 0 56 34" width="52" height="32" xmlns="http://www.w3.org/2000/svg"><path d="M2 3 L54 3" stroke="#fff" stroke-width="1.2" opacity=".55"/><path d="M4 3 L14 3 L9 16 Z" fill="#FF9933"/><path d="M18 3 L28 3 L23 18 Z" fill="var(--cream)"/><path d="M32 3 L42 3 L37 15 Z" fill="#138808"/></svg>';
+const KITE_SVG='<svg viewBox="0 0 36 50" width="32" height="42" xmlns="http://www.w3.org/2000/svg" fill="none"><path d="M18 3 L32 20 L18 41 L4 20 Z" stroke="#3E7CB1" stroke-width="1.5"/><path d="M18 3 L18 41 M4 20 L32 20" stroke="#D9711F" stroke-width="1"/><path d="M18 41 Q20.5 44.5 18 48 Q15.5 44.5 18 41" stroke="#3E7CB1" stroke-width="1.3"/></svg>';
+const DIYA_SVG='<svg viewBox="0 0 44 38" width="38" height="34" xmlns="http://www.w3.org/2000/svg" fill="none"><path d="M4 26 Q22 38 40 26" stroke="var(--rani)" stroke-width="1.6" stroke-linecap="round"/><path d="M6 25 Q22 33 38 25" stroke="var(--turmeric)" stroke-width="1.6" stroke-linecap="round"/><path d="M22 19 C19 13 22 8 22 8 C22 8 25 13 22 19 Z" fill="var(--turmeric)" opacity=".9"/></svg>';
+const RAKHI_SVG='<svg viewBox="0 0 38 42" width="34" height="38" xmlns="http://www.w3.org/2000/svg" fill="none"><circle cx="19" cy="14" r="8.5" stroke="var(--turmeric)" stroke-width="1.6"/><circle cx="19" cy="14" r="3" fill="var(--rani)"/><path d="M19 22.5 L13.5 38 M19 22.5 L24.5 38 M19 22.5 L19 39" stroke="var(--turmeric)" stroke-width="1.3" stroke-linecap="round"/></svg>';
+const DANDIYA_SVG='<svg viewBox="0 0 38 42" width="34" height="38" xmlns="http://www.w3.org/2000/svg" fill="none"><line x1="10" y1="4" x2="28" y2="38" stroke="var(--rani)" stroke-width="2.2" stroke-linecap="round"/><line x1="28" y1="4" x2="10" y2="38" stroke="var(--turmeric)" stroke-width="2.2" stroke-linecap="round"/><circle cx="10" cy="4" r="2" fill="var(--rani)"/><circle cx="28" cy="4" r="2" fill="var(--turmeric)"/></svg>';
 
 const FESTIVALS = [
   // ---- Fixed (MM-DD), automatic forever — do not touch ----
   { name:'Uttarayan',         type:'fixed', start:'01-13', end:'01-15', gold:'#3E7CB1', goldDeep:'#D9711F', banner:'🪁 Happy Uttarayan — Quality Dresses', overlay:{layout:'kite-edges', icon:KITE_SVG} },
   { name:'Republic Day',      type:'fixed', start:'01-24', end:'01-26', gold:'#FF9933', goldDeep:'#138808', banner:'🇮🇳 Happy Republic Day', overlay:{layout:'top-right', icon:BUNTING_SVG} },
   { name:'Independence Day',  type:'fixed', start:'08-11', end:'08-15', gold:'#FF9933', goldDeep:'#138808', banner:'🇮🇳 Happy Independence Day', overlay:{layout:'top-right', icon:BUNTING_SVG} },
-  { name:'New Year',          type:'fixed', start:'12-31', end:'01-01', gold:'#EFB324', goldDeep:'#C98F16', banner:'✨ Happy New Year from Quality Dresses' },
+  { name:'New Year',          type:'fixed', start:'12-31', end:'01-01', gold:'#D9A441', goldDeep:'#A33F4D', banner:'✨ Happy New Year from Quality Dresses' },
 
   // ---- Lunar calendar, year-specific — set for 2026 & 2027 only (see note above) ----
-  { name:'Raksha Bandhan',      type:'dated', start:'2026-08-26', end:'2026-08-28', gold:'#C9302C', goldDeep:'#D9A400', banner:'Raksha Bandhan collection is here! 🎗️', overlay:{layout:'top-right', icon:RAKHI_SVG} },
-  { name:'Raksha Bandhan',      type:'dated', start:'2027-08-16', end:'2027-08-17', gold:'#C9302C', goldDeep:'#D9A400', banner:'Raksha Bandhan collection is here! 🎗️', overlay:{layout:'top-right', icon:RAKHI_SVG} },
-  { name:'Navratri & Dussehra', type:'dated', start:'2026-10-11', end:'2026-10-20', gold:'#A11E22', goldDeep:'#EFB324', banner:'Navratri Special Collection Live Now ✨', overlay:{layout:'top-right', icon:DANDIYA_SVG} },
-  { name:'Navratri & Dussehra', type:'dated', start:'2027-09-30', end:'2027-10-09', gold:'#A11E22', goldDeep:'#EFB324', banner:'Navratri Special Collection Live Now ✨', overlay:{layout:'top-right', icon:DANDIYA_SVG} },
-  { name:'Diwali',              type:'dated', start:'2026-11-05', end:'2026-11-10', gold:'#EFB324', goldDeep:'#A11E22', banner:'🪔 Happy Diwali — Festive Collection Live', overlay:{layout:'bottom-diyas', icon:DIYA_SVG} },
-  { name:'Diwali',              type:'dated', start:'2027-10-27', end:'2027-10-31', gold:'#EFB324', goldDeep:'#A11E22', banner:'🪔 Happy Diwali — Festive Collection Live', overlay:{layout:'bottom-diyas', icon:DIYA_SVG} },
+  { name:'Raksha Bandhan',      type:'dated', start:'2026-08-26', end:'2026-08-28', gold:'#D9A441', goldDeep:'#A33F4D', banner:'Raksha Bandhan collection is here! 🎗️', overlay:{layout:'top-right', icon:RAKHI_SVG} },
+  { name:'Raksha Bandhan',      type:'dated', start:'2027-08-16', end:'2027-08-17', gold:'#D9A441', goldDeep:'#A33F4D', banner:'Raksha Bandhan collection is here! 🎗️', overlay:{layout:'top-right', icon:RAKHI_SVG} },
+  { name:'Navratri & Dussehra', type:'dated', start:'2026-10-11', end:'2026-10-20', gold:'#D9A441', goldDeep:'#A33F4D', banner:'Navratri Special Collection Live Now ✨', overlay:{layout:'top-right', icon:DANDIYA_SVG} },
+  { name:'Navratri & Dussehra', type:'dated', start:'2027-09-30', end:'2027-10-09', gold:'#D9A441', goldDeep:'#A33F4D', banner:'Navratri Special Collection Live Now ✨', overlay:{layout:'top-right', icon:DANDIYA_SVG} },
+  { name:'Diwali',              type:'dated', start:'2026-11-05', end:'2026-11-10', gold:'#D9A441', goldDeep:'#A33F4D', banner:'🪔 Happy Diwali — Festive Collection Live', overlay:{layout:'bottom-diyas', icon:DIYA_SVG} },
+  { name:'Diwali',              type:'dated', start:'2027-10-27', end:'2027-10-31', gold:'#D9A441', goldDeep:'#A33F4D', banner:'🪔 Happy Diwali — Festive Collection Live', overlay:{layout:'bottom-diyas', icon:DIYA_SVG} },
 ];
 
 (function(){
@@ -774,7 +779,7 @@ stats.forEach(el=>statIO.observe(el));
     grid.innerHTML = data.posts.map(post => `
       <a href="${post.permalink}" target="_blank" rel="noopener" style="display:block;aspect-ratio:1/1;border-radius:6px;overflow:hidden;position:relative">
         <img src="${post.image}" alt="${post.caption ? post.caption.replace(/"/g,'&quot;') : 'Instagram post'}" style="width:100%;height:100%;object-fit:cover;display:block" loading="lazy">
-        ${post.isVideo ? '<span style="position:absolute;top:6px;right:6px;background:rgba(38,34,29,.7);color:#fff;font-size:.65rem;padding:2px 6px;border-radius:4px">▶</span>' : ''}
+        ${post.isVideo ? '<span style="position:absolute;top:6px;right:6px;background:rgba(36,31,28,.7);color:#fff;font-size:.65rem;padding:2px 6px;border-radius:4px">▶</span>' : ''}
       </a>
     `).join('');
   }catch(err){
