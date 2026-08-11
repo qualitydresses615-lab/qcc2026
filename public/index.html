@@ -111,7 +111,13 @@ h1,h2,h3,h4{font-family:var(--serif);font-weight:600;letter-spacing:-.01em;color
 .stripe-divider span:nth-child(4n+4){background:var(--slate)}
 
 /* ---- Header ---- */
-header{position:fixed;top:0;left:0;right:0;z-index:100;padding:14px 0;background:rgba(246,241,230,.88);backdrop-filter:blur(14px);border-bottom:1px solid var(--line)}
+:root{--banner-h:0px}
+header{position:fixed;top:var(--banner-h);left:0;right:0;z-index:100;padding:14px 0;background:rgba(246,241,230,.88);backdrop-filter:blur(14px);border-bottom:1px solid var(--line);transition:top .3s var(--ease)}
+
+/* ---- Festival banner ---- */
+.festival-banner{position:fixed;top:0;left:0;right:0;z-index:110;background:var(--charcoal);color:#fff;font-size:.82rem;font-weight:600;text-align:center;padding:10px 42px;display:flex;align-items:center;justify-content:center;gap:8px;flex-wrap:wrap}
+.festival-banner-close{position:absolute;right:10px;top:50%;transform:translateY(-50%);background:none;border:none;color:#fff;font-size:1.15rem;line-height:1;cursor:pointer;padding:4px 8px;opacity:.75}
+.festival-banner-close:hover{opacity:1}
 header .wrap{display:flex;align-items:center;justify-content:space-between}
 .logo img{height:44px;width:auto}
 nav{display:flex;gap:32px;font-size:.88rem;color:var(--charcoal);font-weight:600}
@@ -123,7 +129,7 @@ nav a:hover{color:var(--gold-deep)}
 @media(max-width:800px){.lang-toggle{padding:7px 14px;font-size:.72rem}}
 
 /* ---- Hero (real storefront photo) ---- */
-.hero{position:relative;min-height:100vh;display:flex;align-items:flex-end;padding-top:100px}
+.hero{position:relative;min-height:100vh;display:flex;align-items:flex-end;padding-top:calc(100px + var(--banner-h));transition:padding-top .3s var(--ease)}
 .hero-bg{position:absolute;inset:0;z-index:0}
 .hero-bg img,.hero-bg video{width:100%;height:100%;object-fit:cover;object-position:center 25%;display:block}
 .hero-bg::after{content:'';position:absolute;inset:0;background:linear-gradient(0deg,rgba(38,34,29,.88) 10%,rgba(38,34,29,.55) 45%,rgba(38,34,29,.25) 75%,rgba(38,34,29,.1))}
@@ -196,7 +202,7 @@ footer a:hover{color:var(--gold)}
 .nav-toggle[aria-expanded="true"] span:nth-child(3){transform:translateY(-7px) rotate(-45deg)}
 @media(max-width:800px){
   .nav-toggle{display:block}
-  nav{display:none;position:fixed;top:72px;left:0;right:0;background:var(--paper);flex-direction:column;gap:0;padding:8px 24px 20px;border-bottom:1px solid var(--line);box-shadow:0 16px 28px rgba(38,34,29,.1)}
+  nav{display:none;position:fixed;top:calc(72px + var(--banner-h));left:0;right:0;background:var(--paper);flex-direction:column;gap:0;padding:8px 24px 20px;border-bottom:1px solid var(--line);box-shadow:0 16px 28px rgba(38,34,29,.1)}
   nav.open{display:flex}
   nav a{padding:15px 0;border-bottom:1px solid var(--line)}
   .header-actions>.btn-gold{display:none}
@@ -552,6 +558,69 @@ src="https://www.facebook.com/tr?id=1586602889631592&ev=PageView&noscript=1"
   });
   img.addEventListener('load',computeBounds);
   computeBounds();
+})();
+</script>
+<script>
+// ============ AUTOMATIC FESTIVAL THEME SYSTEM ============
+// FIXED festivals (Uttarayan, Republic Day, Independence Day, New Year)
+// use MM-DD ranges and repeat automatically every year, forever —
+// these never need updating, do not touch their dates.
+//
+// LUNAR-CALENDAR festivals (Raksha Bandhan, Navratri/Dussehra, Diwali)
+// shift every year, so exact dates are set per-year below. Only 2026
+// and 2027 are configured right now. Before 2028 starts (suggested:
+// check in Dec 2027), look up the 2028 dates for these three and add
+// a new entry for each below — otherwise these three themes simply
+// won't activate in 2028 (the fixed festivals above are unaffected).
+const FESTIVALS = [
+  // ---- Fixed (MM-DD), automatic forever — do not touch ----
+  { name:'Uttarayan',         type:'fixed', start:'01-13', end:'01-15', gold:'#3E7CB1', goldDeep:'#D9711F', banner:'🪁 Happy Uttarayan — Quality Dresses' },
+  { name:'Republic Day',      type:'fixed', start:'01-24', end:'01-26', gold:'#FF9933', goldDeep:'#138808', banner:'🇮🇳 Happy Republic Day' },
+  { name:'Independence Day',  type:'fixed', start:'08-11', end:'08-16', gold:'#FF9933', goldDeep:'#138808', banner:'🇮🇳 Happy Independence Day' },
+  { name:'New Year',          type:'fixed', start:'12-31', end:'01-01', gold:'#EFB324', goldDeep:'#C98F16', banner:'✨ Happy New Year from Quality Dresses' },
+
+  // ---- Lunar calendar, year-specific — set for 2026 & 2027 only (see note above) ----
+  { name:'Raksha Bandhan',      type:'dated', start:'2026-08-26', end:'2026-08-28', gold:'#C9302C', goldDeep:'#D9A400', banner:'Raksha Bandhan collection is here! 🎗️' },
+  { name:'Raksha Bandhan',      type:'dated', start:'2027-08-15', end:'2027-08-17', gold:'#C9302C', goldDeep:'#D9A400', banner:'Raksha Bandhan collection is here! 🎗️' },
+  { name:'Navratri & Dussehra', type:'dated', start:'2026-10-11', end:'2026-10-20', gold:'#A11E22', goldDeep:'#EFB324', banner:'Navratri Special Collection Live Now ✨' },
+  { name:'Navratri & Dussehra', type:'dated', start:'2027-09-30', end:'2027-10-09', gold:'#A11E22', goldDeep:'#EFB324', banner:'Navratri Special Collection Live Now ✨' },
+  { name:'Diwali',              type:'dated', start:'2026-11-05', end:'2026-11-10', gold:'#EFB324', goldDeep:'#A11E22', banner:'🪔 Happy Diwali — Festive Collection Live' },
+  { name:'Diwali',              type:'dated', start:'2027-10-27', end:'2027-10-31', gold:'#EFB324', goldDeep:'#A11E22', banner:'🪔 Happy Diwali — Festive Collection Live' },
+];
+
+(function(){
+  const pad=n=>String(n).padStart(2,'0');
+  const today=new Date();
+  const mmdd=pad(today.getMonth()+1)+'-'+pad(today.getDate());
+  const iso=today.getFullYear()+'-'+pad(today.getMonth()+1)+'-'+pad(today.getDate());
+
+  const festival=FESTIVALS.find(f=>{
+    if(f.type==='fixed'){
+      return f.start<=f.end ? (mmdd>=f.start&&mmdd<=f.end) : (mmdd>=f.start||mmdd<=f.end);
+    }
+    return iso>=f.start&&iso<=f.end;
+  });
+  if(!festival)return;
+
+  document.documentElement.style.setProperty('--gold',festival.gold);
+  document.documentElement.style.setProperty('--gold-deep',festival.goldDeep);
+
+  const dismissKey='festivalBannerDismissed:'+festival.name+':'+festival.start;
+  let dismissed=false;
+  try{ dismissed=!!sessionStorage.getItem(dismissKey); }catch(err){}
+  if(dismissed)return;
+
+  const banner=document.createElement('div');
+  banner.className='festival-banner';
+  banner.innerHTML='<span>'+festival.banner+'</span><button class="festival-banner-close" aria-label="Dismiss">&times;</button>';
+  document.body.prepend(banner);
+  document.documentElement.style.setProperty('--banner-h',banner.offsetHeight+'px');
+
+  banner.querySelector('.festival-banner-close').addEventListener('click',()=>{
+    banner.remove();
+    document.documentElement.style.setProperty('--banner-h','0px');
+    try{ sessionStorage.setItem(dismissKey,'1'); }catch(err){}
+  });
 })();
 </script>
 <script>
