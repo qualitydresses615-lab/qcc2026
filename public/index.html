@@ -118,6 +118,15 @@ header{position:fixed;top:var(--banner-h);left:0;right:0;z-index:100;padding:14p
 .festival-banner{position:fixed;top:0;left:0;right:0;z-index:110;background:var(--charcoal);color:#fff;font-size:.82rem;font-weight:600;text-align:center;padding:10px 42px;display:flex;align-items:center;justify-content:center;gap:8px;flex-wrap:wrap}
 .festival-banner-close{position:absolute;right:10px;top:50%;transform:translateY(-50%);background:none;border:none;color:#fff;font-size:1.15rem;line-height:1;cursor:pointer;padding:4px 8px;opacity:.75}
 .festival-banner-close:hover{opacity:1}
+.festival-overlay{position:absolute;z-index:1;opacity:.78;pointer-events:none}
+.festival-overlay svg{display:block}
+.fo-top-right{top:calc(100px + var(--banner-h) + 20px);right:28px}
+.fo-bottom-left{bottom:96px;left:26px;filter:drop-shadow(0 0 10px rgba(239,179,36,.55))}
+.fo-bottom-right{bottom:96px;right:26px;filter:drop-shadow(0 0 10px rgba(239,179,36,.55))}
+.fo-edge-a{top:calc(100px + var(--banner-h) + 50px);left:24px;transform:rotate(-10deg)}
+.fo-edge-b{top:calc(100px + var(--banner-h) + 130px);right:32px;transform:rotate(12deg)}
+.fo-edge-c{bottom:170px;left:56px;transform:rotate(6deg)}
+@media(max-width:700px){.festival-overlay{display:none}}
 header .wrap{display:flex;align-items:center;justify-content:space-between}
 .logo img{height:44px;width:auto}
 nav{display:flex;gap:32px;font-size:.88rem;color:var(--charcoal);font-weight:600}
@@ -572,38 +581,79 @@ src="https://www.facebook.com/tr?id=1586602889631592&ev=PageView&noscript=1"
 // check in Dec 2027), look up the 2028 dates for these three and add
 // a new entry for each below — otherwise these three themes simply
 // won't activate in 2028 (the fixed festivals above are unaffected).
+//
+// PREVIEW: append ?festival=<name> to the URL to force a theme on
+// regardless of date, e.g. ?festival=diwali — matches any festival
+// whose name contains the given text (case-insensitive). An unknown
+// name shows the normal default theme, not the date-based one.
+const BUNTING_SVG='<svg viewBox="0 0 56 34" width="52" height="32" xmlns="http://www.w3.org/2000/svg"><path d="M2 3 L54 3" stroke="#fff" stroke-width="1.2" opacity=".55"/><path d="M4 3 L14 3 L9 16 Z" fill="#FF9933"/><path d="M18 3 L28 3 L23 18 Z" fill="#F6F1E6"/><path d="M32 3 L42 3 L37 15 Z" fill="#138808"/></svg>';
+const KITE_SVG='<svg viewBox="0 0 36 44" width="34" height="40" xmlns="http://www.w3.org/2000/svg"><path d="M18 2 L33 20 L18 42 L3 20 Z" fill="#3E7CB1" fill-opacity=".85"/><path d="M18 2 L18 42 M3 20 L33 20" stroke="#fff" stroke-width="1"/><path d="M18 42 Q21 46 18 50 Q15 46 18 42" stroke="#D9711F" stroke-width="1.4" fill="none"/></svg>';
+const DIYA_SVG='<svg viewBox="0 0 44 40" width="40" height="36" xmlns="http://www.w3.org/2000/svg"><ellipse cx="22" cy="28" rx="18" ry="7" fill="#A11E22"/><ellipse cx="22" cy="25" rx="13" ry="4.5" fill="#EFB324"/><path d="M22 19 C19 13 22 9 22 9 C22 9 25 13 22 19 Z" fill="#FFB74D"/><path d="M22 15 C20.5 12 22 9.5 22 9.5 C22 9.5 23.5 12 22 15 Z" fill="#FFF3C4"/></svg>';
+const RAKHI_SVG='<svg viewBox="0 0 40 44" width="36" height="40" xmlns="http://www.w3.org/2000/svg"><circle cx="20" cy="15" r="9" fill="none" stroke="#D9A400" stroke-width="2.5"/><circle cx="20" cy="15" r="4" fill="#C9302C"/><path d="M20 24 L14 40 M20 24 L26 40 M20 24 L20 41" stroke="#D9A400" stroke-width="1.4" stroke-linecap="round"/></svg>';
+const DANDIYA_SVG='<svg viewBox="0 0 40 44" width="36" height="40" xmlns="http://www.w3.org/2000/svg"><line x1="11" y1="4" x2="29" y2="40" stroke="#A11E22" stroke-width="4" stroke-linecap="round"/><line x1="29" y1="4" x2="11" y2="40" stroke="#EFB324" stroke-width="4" stroke-linecap="round"/><circle cx="11" cy="4" r="2.5" fill="#A11E22"/><circle cx="29" cy="4" r="2.5" fill="#EFB324"/></svg>';
+
 const FESTIVALS = [
   // ---- Fixed (MM-DD), automatic forever — do not touch ----
-  { name:'Uttarayan',         type:'fixed', start:'01-13', end:'01-15', gold:'#3E7CB1', goldDeep:'#D9711F', banner:'🪁 Happy Uttarayan — Quality Dresses' },
-  { name:'Republic Day',      type:'fixed', start:'01-24', end:'01-26', gold:'#FF9933', goldDeep:'#138808', banner:'🇮🇳 Happy Republic Day' },
-  { name:'Independence Day',  type:'fixed', start:'08-11', end:'08-15', gold:'#FF9933', goldDeep:'#138808', banner:'🇮🇳 Happy Independence Day' },
+  { name:'Uttarayan',         type:'fixed', start:'01-13', end:'01-15', gold:'#3E7CB1', goldDeep:'#D9711F', banner:'🪁 Happy Uttarayan — Quality Dresses', overlay:{layout:'kite-edges', icon:KITE_SVG} },
+  { name:'Republic Day',      type:'fixed', start:'01-24', end:'01-26', gold:'#FF9933', goldDeep:'#138808', banner:'🇮🇳 Happy Republic Day', overlay:{layout:'top-right', icon:BUNTING_SVG} },
+  { name:'Independence Day',  type:'fixed', start:'08-11', end:'08-15', gold:'#FF9933', goldDeep:'#138808', banner:'🇮🇳 Happy Independence Day', overlay:{layout:'top-right', icon:BUNTING_SVG} },
   { name:'New Year',          type:'fixed', start:'12-31', end:'01-01', gold:'#EFB324', goldDeep:'#C98F16', banner:'✨ Happy New Year from Quality Dresses' },
 
   // ---- Lunar calendar, year-specific — set for 2026 & 2027 only (see note above) ----
-  { name:'Raksha Bandhan',      type:'dated', start:'2026-08-26', end:'2026-08-28', gold:'#C9302C', goldDeep:'#D9A400', banner:'Raksha Bandhan collection is here! 🎗️' },
-  { name:'Raksha Bandhan',      type:'dated', start:'2027-08-16', end:'2027-08-17', gold:'#C9302C', goldDeep:'#D9A400', banner:'Raksha Bandhan collection is here! 🎗️' },
-  { name:'Navratri & Dussehra', type:'dated', start:'2026-10-11', end:'2026-10-20', gold:'#A11E22', goldDeep:'#EFB324', banner:'Navratri Special Collection Live Now ✨' },
-  { name:'Navratri & Dussehra', type:'dated', start:'2027-09-30', end:'2027-10-09', gold:'#A11E22', goldDeep:'#EFB324', banner:'Navratri Special Collection Live Now ✨' },
-  { name:'Diwali',              type:'dated', start:'2026-11-05', end:'2026-11-10', gold:'#EFB324', goldDeep:'#A11E22', banner:'🪔 Happy Diwali — Festive Collection Live' },
-  { name:'Diwali',              type:'dated', start:'2027-10-27', end:'2027-10-31', gold:'#EFB324', goldDeep:'#A11E22', banner:'🪔 Happy Diwali — Festive Collection Live' },
+  { name:'Raksha Bandhan',      type:'dated', start:'2026-08-26', end:'2026-08-28', gold:'#C9302C', goldDeep:'#D9A400', banner:'Raksha Bandhan collection is here! 🎗️', overlay:{layout:'top-right', icon:RAKHI_SVG} },
+  { name:'Raksha Bandhan',      type:'dated', start:'2027-08-16', end:'2027-08-17', gold:'#C9302C', goldDeep:'#D9A400', banner:'Raksha Bandhan collection is here! 🎗️', overlay:{layout:'top-right', icon:RAKHI_SVG} },
+  { name:'Navratri & Dussehra', type:'dated', start:'2026-10-11', end:'2026-10-20', gold:'#A11E22', goldDeep:'#EFB324', banner:'Navratri Special Collection Live Now ✨', overlay:{layout:'top-right', icon:DANDIYA_SVG} },
+  { name:'Navratri & Dussehra', type:'dated', start:'2027-09-30', end:'2027-10-09', gold:'#A11E22', goldDeep:'#EFB324', banner:'Navratri Special Collection Live Now ✨', overlay:{layout:'top-right', icon:DANDIYA_SVG} },
+  { name:'Diwali',              type:'dated', start:'2026-11-05', end:'2026-11-10', gold:'#EFB324', goldDeep:'#A11E22', banner:'🪔 Happy Diwali — Festive Collection Live', overlay:{layout:'bottom-diyas', icon:DIYA_SVG} },
+  { name:'Diwali',              type:'dated', start:'2027-10-27', end:'2027-10-31', gold:'#EFB324', goldDeep:'#A11E22', banner:'🪔 Happy Diwali — Festive Collection Live', overlay:{layout:'bottom-diyas', icon:DIYA_SVG} },
 ];
 
 (function(){
   const pad=n=>String(n).padStart(2,'0');
-  const today=new Date();
-  const mmdd=pad(today.getMonth()+1)+'-'+pad(today.getDate());
-  const iso=today.getFullYear()+'-'+pad(today.getMonth()+1)+'-'+pad(today.getDate());
+  const normalize=s=>s.toLowerCase().replace(/[^a-z0-9]/g,'');
 
-  const festival=FESTIVALS.find(f=>{
-    if(f.type==='fixed'){
-      return f.start<=f.end ? (mmdd>=f.start&&mmdd<=f.end) : (mmdd>=f.start||mmdd<=f.end);
-    }
-    return iso>=f.start&&iso<=f.end;
-  });
+  function findByDate(){
+    const today=new Date();
+    const mmdd=pad(today.getMonth()+1)+'-'+pad(today.getDate());
+    const iso=today.getFullYear()+'-'+pad(today.getMonth()+1)+'-'+pad(today.getDate());
+    return FESTIVALS.find(f=>{
+      if(f.type==='fixed'){
+        return f.start<=f.end ? (mmdd>=f.start&&mmdd<=f.end) : (mmdd>=f.start||mmdd<=f.end);
+      }
+      return iso>=f.start&&iso<=f.end;
+    });
+  }
+
+  let festival=null;
+  const params=new URLSearchParams(location.search);
+  if(params.has('festival')){
+    const forced=normalize(params.get('festival')||'');
+    festival=forced?(FESTIVALS.find(f=>normalize(f.name).includes(forced))||null):null;
+  }else{
+    festival=findByDate();
+  }
   if(!festival)return;
 
   document.documentElement.style.setProperty('--gold',festival.gold);
   document.documentElement.style.setProperty('--gold-deep',festival.goldDeep);
+
+  if(festival.overlay){
+    const hero=document.querySelector('.hero');
+    const layouts={
+      'top-right':['fo-top-right'],
+      'bottom-diyas':['fo-bottom-left','fo-bottom-right'],
+      'kite-edges':['fo-edge-a','fo-edge-b','fo-edge-c'],
+    };
+    const placements=layouts[festival.overlay.layout]||[];
+    if(hero){
+      placements.forEach(cls=>{
+        const el=document.createElement('div');
+        el.className='festival-overlay '+cls;
+        el.innerHTML=festival.overlay.icon;
+        hero.appendChild(el);
+      });
+    }
+  }
 
   const dismissKey='festivalBannerDismissed:'+festival.name+':'+festival.start;
   let dismissed=false;
