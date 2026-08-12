@@ -119,18 +119,14 @@ h1,h2,h3,h4{font-family:var(--serif);color:var(--charcoal)}
 header{position:fixed;top:var(--banner-h);left:0;right:0;z-index:100;padding:14px 0;background:rgba(246,241,230,.88);backdrop-filter:blur(14px);border-bottom:1px solid var(--line);transition:top .3s var(--ease)}
 
 /* ---- Festival banner ---- */
-.festival-banner{position:fixed;top:0;left:0;right:0;z-index:110;background:var(--charcoal);color:var(--cream);font-family:var(--sans);font-size:.8rem;font-weight:500;letter-spacing:.02em;text-align:center;padding:13px 48px;display:flex;align-items:center;justify-content:center;gap:10px;flex-wrap:wrap;border-bottom:1px solid rgba(243,237,225,.12)}
-.festival-banner-close{position:absolute;right:14px;top:50%;transform:translateY(-50%);background:none;border:none;color:var(--cream);font-size:1.05rem;line-height:1;cursor:pointer;padding:6px 10px;opacity:.65;transition:opacity .2s var(--ease)}
-.festival-banner-close:hover{opacity:1}
-.festival-overlay{position:absolute;z-index:1;opacity:.78;pointer-events:none}
-.festival-overlay svg{display:block}
-.fo-top-right{top:calc(100px + var(--banner-h) + 20px);right:28px}
-.fo-bottom-left{bottom:96px;left:26px;filter:drop-shadow(0 0 10px rgba(217,164,65,.55))}
-.fo-bottom-right{bottom:96px;right:26px;filter:drop-shadow(0 0 10px rgba(217,164,65,.55))}
-.fo-edge-a{top:calc(100px + var(--banner-h) + 50px);left:24px;transform:rotate(-10deg)}
-.fo-edge-b{top:calc(100px + var(--banner-h) + 130px);right:32px;transform:rotate(12deg)}
-.fo-edge-c{bottom:170px;left:56px;transform:rotate(6deg)}
-@media(max-width:700px){.festival-overlay{display:none}}
+.festival-banner{position:fixed;top:0;left:0;right:0;z-index:110;background:var(--charcoal);color:var(--cream);font-family:var(--sans)}
+.festival-banner-row{display:flex;align-items:center;justify-content:center;gap:20px;padding:15px 64px 15px 24px;flex-wrap:wrap;font-size:.8rem;font-weight:500;letter-spacing:.02em}
+.festival-banner-close{position:absolute;top:50%;right:18px;transform:translateY(-50%);width:28px;height:28px;border:1px solid rgba(243,237,225,.28);border-radius:2px;background:none;color:var(--cream);font-size:1.05rem;line-height:1;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:.2s var(--ease)}
+.festival-banner-close:hover{background:rgba(243,237,225,.12);border-color:var(--cream)}
+.festival-banner-strip{display:flex;height:4px;width:100%}
+.hero-corner-mark{position:absolute;top:calc(100px + var(--banner-h) + 10px);right:30px;opacity:.72;width:68px;pointer-events:none;z-index:1}
+.hero-corner-mark svg{width:100%;height:auto;display:block}
+@media(max-width:700px){.hero-corner-mark{width:44px}}
 header .wrap{display:flex;align-items:center;justify-content:space-between}
 .logo img{height:44px;width:auto}
 nav{display:flex;gap:32px;font-size:.88rem;color:var(--charcoal);font-weight:600}
@@ -595,26 +591,54 @@ src="https://www.facebook.com/tr?id=1586602889631592&ev=PageView&noscript=1"
 // regardless of date, e.g. ?festival=diwali — matches any festival
 // whose name contains the given text (case-insensitive). An unknown
 // name shows the normal default theme, not the date-based one.
-const BUNTING_SVG='<svg viewBox="0 0 56 34" width="52" height="32" xmlns="http://www.w3.org/2000/svg"><path d="M2 3 L54 3" stroke="#fff" stroke-width="1.2" opacity=".55"/><path d="M4 3 L14 3 L9 16 Z" fill="#FF9933"/><path d="M18 3 L28 3 L23 18 Z" fill="var(--cream)"/><path d="M32 3 L42 3 L37 15 Z" fill="#138808"/></svg>';
-const KITE_SVG='<svg viewBox="0 0 36 50" width="32" height="42" xmlns="http://www.w3.org/2000/svg" fill="none"><path d="M18 3 L32 20 L18 41 L4 20 Z" stroke="#3E7CB1" stroke-width="1.5"/><path d="M18 3 L18 41 M4 20 L32 20" stroke="#D9711F" stroke-width="1"/><path d="M18 41 Q20.5 44.5 18 48 Q15.5 44.5 18 41" stroke="#3E7CB1" stroke-width="1.3"/></svg>';
-const DIYA_SVG='<svg viewBox="0 0 44 38" width="38" height="34" xmlns="http://www.w3.org/2000/svg" fill="none"><path d="M4 26 Q22 38 40 26" stroke="var(--rani)" stroke-width="1.6" stroke-linecap="round"/><path d="M6 25 Q22 33 38 25" stroke="var(--turmeric)" stroke-width="1.6" stroke-linecap="round"/><path d="M22 19 C19 13 22 8 22 8 C22 8 25 13 22 19 Z" fill="var(--turmeric)" opacity=".9"/></svg>';
-const RAKHI_SVG='<svg viewBox="0 0 38 42" width="34" height="38" xmlns="http://www.w3.org/2000/svg" fill="none"><circle cx="19" cy="14" r="8.5" stroke="var(--turmeric)" stroke-width="1.6"/><circle cx="19" cy="14" r="3" fill="var(--rani)"/><path d="M19 22.5 L13.5 38 M19 22.5 L24.5 38 M19 22.5 L19 39" stroke="var(--turmeric)" stroke-width="1.3" stroke-linecap="round"/></svg>';
-const DANDIYA_SVG='<svg viewBox="0 0 38 42" width="34" height="38" xmlns="http://www.w3.org/2000/svg" fill="none"><line x1="10" y1="4" x2="28" y2="38" stroke="var(--rani)" stroke-width="2.2" stroke-linecap="round"/><line x1="28" y1="4" x2="10" y2="38" stroke="var(--turmeric)" stroke-width="2.2" stroke-linecap="round"/><circle cx="10" cy="4" r="2" fill="var(--rani)"/><circle cx="28" cy="4" r="2" fill="var(--turmeric)"/></svg>';
+//
+// Banner has 3 visual variants:
+//  - 'tricolour' (Independence/Republic Day): flag icon, cream text,
+//    3-equal-block saffron/cream/green strip. Deliberately does NOT
+//    touch the site-wide --gold/--rani/--turmeric variables — only
+//    the banner itself goes tricolour.
+//  - 'festive' (Uttarayan/Raksha Bandhan/Navratri/Diwali): mini
+//    fabric-swatch icon, turmeric text, warm 8-segment strip. Still
+//    overrides --gold/--gold-deep with the festival's turmeric/rani
+//    tones since those coordinate with the site palette.
+//  - default/generic (anything else, e.g. New Year): no icon, cream
+//    text, neutral 8-segment strip drawn from the full site palette.
+const FLAG_SVG='<svg width="26" height="18" viewBox="0 0 26 18" fill="none" xmlns="http://www.w3.org/2000/svg" style="display:block;"><rect x="0.75" y="0.75" width="24.5" height="5" fill="#FF9933"></rect><rect x="0.75" y="6.25" width="24.5" height="5" fill="#F3EDE1"></rect><rect x="0.75" y="11.75" width="24.5" height="5" fill="#138808"></rect><rect x="0.75" y="0.75" width="24.5" height="16" stroke="rgba(243,237,225,0.35)" stroke-width="1"></rect></svg>';
+const SWATCH_SVG='<span style="display:flex; gap:3px; align-items:center;"><span style="width:5px; height:15px; background:var(--turmeric); display:block;"></span><span style="width:9px; height:15px; background:var(--rani); display:block;"></span><span style="width:4px; height:15px; background:var(--indigo-light); display:block;"></span></span>';
+const DIYA_HERO_SVG='<svg width="72" height="72" viewBox="0 0 48 48" fill="none" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" xmlns="http://www.w3.org/2000/svg"><path d="M10 30 C10 30 16 26 24 26 C32 26 38 30 38 30 C38 34 32 37 24 37 C16 37 10 34 10 30 Z" stroke="#1F3A5F"></path><path d="M24 26 C24 20 24 16 24 13" stroke="#A33F4D"></path><path d="M24 13 C20 15 20 20 24 21 C28 20 28 15 24 13 Z" stroke="#D9A441"></path><path d="M14 41 H34" stroke="#2F5A7A"></path></svg>';
+const KITE_HERO_SVG='<svg width="72" height="72" viewBox="0 0 48 48" fill="none" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" xmlns="http://www.w3.org/2000/svg"><path d="M24 6 L38 20 L24 34 L10 20 Z" stroke="#1F3A5F"></path><path d="M24 6 V34" stroke="#2F5A7A"></path><path d="M10 20 H38" stroke="#2F5A7A"></path><path d="M24 34 C22 38 27 39 25 43" stroke="#A33F4D"></path><path d="M28 41 L33 40" stroke="#D9A441"></path></svg>';
+const RAKHI_HERO_SVG='<svg width="72" height="72" viewBox="0 0 48 48" fill="none" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" xmlns="http://www.w3.org/2000/svg"><circle cx="24" cy="24" r="6.5" stroke="#A33F4D"></circle><circle cx="24" cy="24" r="11" stroke="#D9A441"></circle><path d="M13 24 C8 20 5 26 3 28" stroke="#1F3A5F"></path><path d="M35 24 C40 20 43 26 45 28" stroke="#1F3A5F"></path><path d="M13 24 C9 28 6 34 5 38" stroke="#2F5A7A"></path><path d="M35 24 C39 28 42 34 43 38" stroke="#2F5A7A"></path></svg>';
+const DANDIYA_HERO_SVG='<svg width="72" height="72" viewBox="0 0 48 48" fill="none" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" xmlns="http://www.w3.org/2000/svg"><path d="M14 10 L34 38" stroke="#A33F4D"></path><path d="M34 10 L14 38" stroke="#D9A441"></path><path d="M14 10 L17 7" stroke="#A33F4D"></path><path d="M34 10 L31 7" stroke="#D9A441"></path><path d="M14 38 L12 41" stroke="#A33F4D"></path><path d="M34 38 L36 41" stroke="#D9A441"></path></svg>';
+
+function stripHTML(segments){
+  return segments.map(s=>'<span style="flex:'+s.flex+';background:'+s.bg+'"></span>').join('');
+}
+const STRIP_GENERIC=stripHTML([
+  {flex:'0 0 11%',bg:'var(--gold)'},{flex:'0 0 5%',bg:'var(--turmeric)'},{flex:'0 0 17%',bg:'var(--rani)'},{flex:'0 0 7%',bg:'var(--indigo-light)'},
+  {flex:'0 0 23%',bg:'var(--gold)'},{flex:'0 0 4%',bg:'var(--turmeric)'},{flex:'0 0 13%',bg:'var(--rani-deep)'},{flex:'1 1 auto',bg:'var(--indigo-light)'},
+]);
+const STRIP_TRICOLOUR=stripHTML([
+  {flex:'1 1 0',bg:'#FF9933'},{flex:'1 1 0',bg:'#F3EDE1'},{flex:'1 1 0',bg:'#138808'},
+]);
+const STRIP_FESTIVE=stripHTML([
+  {flex:'0 0 8%',bg:'var(--turmeric)'},{flex:'0 0 19%',bg:'var(--rani)'},{flex:'0 0 5%',bg:'var(--indigo-light)'},{flex:'0 0 16%',bg:'var(--gold)'},
+  {flex:'0 0 9%',bg:'var(--rani-deep)'},{flex:'0 0 22%',bg:'var(--turmeric)'},{flex:'0 0 6%',bg:'var(--gold)'},{flex:'1 1 auto',bg:'var(--rani)'},
+]);
 
 const FESTIVALS = [
   // ---- Fixed (MM-DD), automatic forever — do not touch ----
-  { name:'Uttarayan',         type:'fixed', start:'01-13', end:'01-15', gold:'#3E7CB1', goldDeep:'#D9711F', banner:'🪁 Happy Uttarayan — Quality Dresses', overlay:{layout:'kite-edges', icon:KITE_SVG} },
-  { name:'Republic Day',      type:'fixed', start:'01-24', end:'01-26', gold:'#FF9933', goldDeep:'#138808', banner:'🇮🇳 Happy Republic Day', overlay:{layout:'top-right', icon:BUNTING_SVG} },
-  { name:'Independence Day',  type:'fixed', start:'08-11', end:'08-15', gold:'#FF9933', goldDeep:'#138808', banner:'🇮🇳 Happy Independence Day', overlay:{layout:'top-right', icon:BUNTING_SVG} },
+  { name:'Uttarayan',         type:'fixed', start:'01-13', end:'01-15', gold:'#D9A441', goldDeep:'#A33F4D', banner:'🪁 Happy Uttarayan — Quality Dresses', variant:'festive', heroIcon:KITE_HERO_SVG },
+  { name:'Republic Day',      type:'fixed', start:'01-24', end:'01-26', banner:'🇮🇳 Happy Republic Day', variant:'tricolour' },
+  { name:'Independence Day',  type:'fixed', start:'08-11', end:'08-15', banner:'🇮🇳 Happy Independence Day', variant:'tricolour' },
   { name:'New Year',          type:'fixed', start:'12-31', end:'01-01', gold:'#D9A441', goldDeep:'#A33F4D', banner:'✨ Happy New Year from Quality Dresses' },
 
   // ---- Lunar calendar, year-specific — set for 2026 & 2027 only (see note above) ----
-  { name:'Raksha Bandhan',      type:'dated', start:'2026-08-26', end:'2026-08-28', gold:'#D9A441', goldDeep:'#A33F4D', banner:'Raksha Bandhan collection is here! 🎗️', overlay:{layout:'top-right', icon:RAKHI_SVG} },
-  { name:'Raksha Bandhan',      type:'dated', start:'2027-08-16', end:'2027-08-17', gold:'#D9A441', goldDeep:'#A33F4D', banner:'Raksha Bandhan collection is here! 🎗️', overlay:{layout:'top-right', icon:RAKHI_SVG} },
-  { name:'Navratri & Dussehra', type:'dated', start:'2026-10-11', end:'2026-10-20', gold:'#D9A441', goldDeep:'#A33F4D', banner:'Navratri Special Collection Live Now ✨', overlay:{layout:'top-right', icon:DANDIYA_SVG} },
-  { name:'Navratri & Dussehra', type:'dated', start:'2027-09-30', end:'2027-10-09', gold:'#D9A441', goldDeep:'#A33F4D', banner:'Navratri Special Collection Live Now ✨', overlay:{layout:'top-right', icon:DANDIYA_SVG} },
-  { name:'Diwali',              type:'dated', start:'2026-11-05', end:'2026-11-10', gold:'#D9A441', goldDeep:'#A33F4D', banner:'🪔 Happy Diwali — Festive Collection Live', overlay:{layout:'bottom-diyas', icon:DIYA_SVG} },
-  { name:'Diwali',              type:'dated', start:'2027-10-27', end:'2027-10-31', gold:'#D9A441', goldDeep:'#A33F4D', banner:'🪔 Happy Diwali — Festive Collection Live', overlay:{layout:'bottom-diyas', icon:DIYA_SVG} },
+  { name:'Raksha Bandhan',      type:'dated', start:'2026-08-26', end:'2026-08-28', gold:'#D9A441', goldDeep:'#A33F4D', banner:'Raksha Bandhan collection is here! 🎗️', variant:'festive', heroIcon:RAKHI_HERO_SVG },
+  { name:'Raksha Bandhan',      type:'dated', start:'2027-08-16', end:'2027-08-17', gold:'#D9A441', goldDeep:'#A33F4D', banner:'Raksha Bandhan collection is here! 🎗️', variant:'festive', heroIcon:RAKHI_HERO_SVG },
+  { name:'Navratri & Dussehra', type:'dated', start:'2026-10-11', end:'2026-10-20', gold:'#D9A441', goldDeep:'#A33F4D', banner:'Navratri Special Collection Live Now ✨', variant:'festive', heroIcon:DANDIYA_HERO_SVG },
+  { name:'Navratri & Dussehra', type:'dated', start:'2027-09-30', end:'2027-10-09', gold:'#D9A441', goldDeep:'#A33F4D', banner:'Navratri Special Collection Live Now ✨', variant:'festive', heroIcon:DANDIYA_HERO_SVG },
+  { name:'Diwali',              type:'dated', start:'2026-11-05', end:'2026-11-10', gold:'#D9A441', goldDeep:'#A33F4D', banner:'🪔 Happy Diwali — Festive Collection Live', variant:'festive', heroIcon:DIYA_HERO_SVG },
+  { name:'Diwali',              type:'dated', start:'2027-10-27', end:'2027-10-31', gold:'#D9A441', goldDeep:'#A33F4D', banner:'🪔 Happy Diwali — Festive Collection Live', variant:'festive', heroIcon:DIYA_HERO_SVG },
 ];
 
 (function(){
@@ -643,24 +667,18 @@ const FESTIVALS = [
   }
   if(!festival)return;
 
-  document.documentElement.style.setProperty('--gold',festival.gold);
-  document.documentElement.style.setProperty('--gold-deep',festival.goldDeep);
+  if(festival.gold){
+    document.documentElement.style.setProperty('--gold',festival.gold);
+    document.documentElement.style.setProperty('--gold-deep',festival.goldDeep);
+  }
 
-  if(festival.overlay){
+  if(festival.heroIcon){
     const hero=document.querySelector('.hero');
-    const layouts={
-      'top-right':['fo-top-right'],
-      'bottom-diyas':['fo-bottom-left','fo-bottom-right'],
-      'kite-edges':['fo-edge-a','fo-edge-b','fo-edge-c'],
-    };
-    const placements=layouts[festival.overlay.layout]||[];
     if(hero){
-      placements.forEach(cls=>{
-        const el=document.createElement('div');
-        el.className='festival-overlay '+cls;
-        el.innerHTML=festival.overlay.icon;
-        hero.appendChild(el);
-      });
+      const mark=document.createElement('div');
+      mark.className='hero-corner-mark';
+      mark.innerHTML=festival.heroIcon;
+      hero.appendChild(mark);
     }
   }
 
@@ -669,9 +687,19 @@ const FESTIVALS = [
   try{ dismissed=!!sessionStorage.getItem(dismissKey); }catch(err){}
   if(dismissed)return;
 
+  let icon='', textColor='var(--cream)', strip=STRIP_GENERIC;
+  if(festival.variant==='tricolour'){
+    icon=FLAG_SVG; textColor='var(--cream)'; strip=STRIP_TRICOLOUR;
+  }else if(festival.variant==='festive'){
+    icon=SWATCH_SVG; textColor='var(--turmeric)'; strip=STRIP_FESTIVE;
+  }
+
   const banner=document.createElement('div');
   banner.className='festival-banner';
-  banner.innerHTML='<span>'+festival.banner+'</span><button class="festival-banner-close" aria-label="Dismiss">&times;</button>';
+  banner.innerHTML=
+    '<div class="festival-banner-row">'+icon+'<span style="color:'+textColor+'">'+festival.banner+'</span></div>'+
+    '<button class="festival-banner-close" aria-label="Dismiss">&times;</button>'+
+    '<div class="festival-banner-strip">'+strip+'</div>';
   document.body.prepend(banner);
   document.documentElement.style.setProperty('--banner-h',banner.offsetHeight+'px');
 
