@@ -68,14 +68,16 @@
   --slate:#78858E;        /* real sampled colour from the building facade stripes */
   --tan:#C9AE87;          /* real building facade tan/beige stripe */
   --gold:#1F3A5F;         /* brand indigo — variable kept as --gold for compatibility */
-  --gold-deep:#17293F;
+  --gold-deep:#152B47;
   --rani:#A33F4D;         /* deep madder red — secondary accent */
+  --rani-deep:#7C2F3C;    /* darker rani, for accents */
   --turmeric:#D9A441;     /* muted gold-turmeric — small accent details only, not button fills */
+  --indigo-light:#2F5A7A; /* lighter indigo, divider variety */
   --red:#C22A2E;          /* crown + DRESSES banner red */
   --green:#3C6B47;        /* heritage green, from the original logo artwork */
   --line:rgba(36,31,28,.14);
-  --muted:#6B6459;
-  --radius:16px;
+  --muted:rgba(36,31,28,.75);
+  --radius:6px;
   --ease:cubic-bezier(.16,1,.3,1);
   --serif:'Petrona',serif;
   --sans:'Work Sans',sans-serif;
@@ -84,19 +86,20 @@
 html{scroll-behavior:smooth}
 body{
   background:var(--cream);color:var(--charcoal);font-family:var(--sans);
-  -webkit-font-smoothing:antialiased;line-height:1.5;overflow-x:hidden;
+  -webkit-font-smoothing:antialiased;line-height:1.63;overflow-x:hidden;
 }
 img{max-width:100%;display:block}
 a{color:inherit;text-decoration:none}
 .wrap{max-width:1180px;margin:0 auto;padding:0 24px}
-.eyebrow{display:inline-block;font-size:.75rem;letter-spacing:.14em;text-transform:uppercase;color:var(--gold-deep);font-weight:700;margin-bottom:14px}
-h1,h2,h3,h4{font-family:var(--serif);font-weight:600;letter-spacing:-.01em;color:var(--charcoal)}
+.eyebrow{display:inline-block;font-size:11px;letter-spacing:.22em;text-transform:uppercase;color:var(--rani);font-weight:500;margin-bottom:14px}
+.eyebrow::before{content:'';display:inline-block;width:34px;height:2px;background:var(--rani);margin-right:10px;vertical-align:middle}
+h1,h2,h3,h4{font-family:var(--serif);color:var(--charcoal)}
 .section{padding:96px 0}
 .section-head{max-width:640px;margin-bottom:56px}
 .section-head.center{margin-left:auto;margin-right:auto;text-align:center}
-.section-head h2{font-size:clamp(1.9rem,4vw,2.6rem);margin-bottom:14px}
+.section-head h2{font-size:clamp(2rem,4vw,2.875rem);font-weight:500;line-height:1.1;letter-spacing:-.02em;margin-bottom:14px}
 .section-head p{color:var(--muted);font-size:1.05rem}
-.btn{display:inline-flex;align-items:center;gap:10px;padding:15px 30px;border-radius:100px;font-weight:700;font-size:.95rem;border:none;cursor:pointer;transition:transform .3s var(--ease)}
+.btn{display:inline-flex;align-items:center;gap:10px;padding:15px 30px;border-radius:2px;font-weight:700;font-size:.95rem;border:none;cursor:pointer;transition:transform .3s var(--ease)}
 .btn-gold{background:linear-gradient(90deg,var(--gold),var(--gold-deep));color:var(--cream)}
 .btn-gold:hover{transform:translateY(-2px)}
 .btn-red{background:var(--red);color:#fff}
@@ -108,12 +111,8 @@ h1,h2,h3,h4{font-family:var(--serif);font-weight:600;letter-spacing:-.01em;color
 /* ---- Signature motif: "Fabric Stack" — irregular-width colour blocks,
    like bolts of cloth stacked edge-on on a shelf. Used everywhere the
    old even-striped divider used to be. ---- */
-.fabric-stack{height:13px;display:flex;overflow:hidden}
-.fabric-stack span{height:100%;flex:0 0 auto}
-.fabric-stack span:nth-child(4n+1){background:var(--gold)}
-.fabric-stack span:nth-child(4n+2){background:var(--rani)}
-.fabric-stack span:nth-child(4n+3){background:var(--turmeric)}
-.fabric-stack span:nth-child(4n+4){background:var(--cream)}
+.fabric-stack{height:22px;width:100%;display:flex}
+.fabric-stack span{height:100%}
 
 /* ---- Header ---- */
 :root{--banner-h:0px}
@@ -138,7 +137,7 @@ nav{display:flex;gap:32px;font-size:.88rem;color:var(--charcoal);font-weight:600
 nav a:hover{color:var(--gold-deep)}
 @media(max-width:800px){nav{display:none}}
 .header-actions{display:flex;align-items:center;gap:12px}
-.lang-toggle{display:inline-flex;align-items:center;padding:9px 18px;border-radius:100px;border:1.5px solid var(--charcoal);background:transparent;color:var(--charcoal);font-weight:700;font-size:.8rem;cursor:pointer;transition:.25s var(--ease)}
+.lang-toggle{display:inline-flex;align-items:center;padding:9px 18px;border-radius:2px;border:1.5px solid var(--charcoal);background:transparent;color:var(--charcoal);font-weight:700;font-size:.8rem;cursor:pointer;transition:.25s var(--ease)}
 .lang-toggle:hover{background:var(--gold);border-color:var(--gold);color:var(--cream)}
 @media(max-width:800px){.lang-toggle{padding:7px 14px;font-size:.72rem}}
 
@@ -148,7 +147,7 @@ nav a:hover{color:var(--gold-deep)}
 .hero-bg img,.hero-bg video{width:100%;height:100%;object-fit:cover;object-position:center 25%;display:block}
 .hero-bg::after{content:'';position:absolute;inset:0;background:linear-gradient(0deg,rgba(36,31,28,.88) 10%,rgba(36,31,28,.55) 45%,rgba(36,31,28,.25) 75%,rgba(36,31,28,.1))}
 .hero .wrap{position:relative;z-index:2;padding-bottom:64px}
-.hero h1{font-size:clamp(2.2rem,5.6vw,4rem);line-height:1.06;margin-bottom:18px;max-width:820px;color:#fff}
+.hero h1{font-size:clamp(2.625rem,5vw,4.75rem);font-weight:500;line-height:1.02;letter-spacing:-.025em;margin-bottom:18px;max-width:820px;color:#fff}
 .hero p.sub{font-size:1.1rem;color:#EAE3D3;max-width:52ch;margin-bottom:30px}
 .hero-ctas{display:flex;gap:16px;flex-wrap:wrap;margin-bottom:44px}
 .stat-strip{display:flex;gap:0;flex-wrap:wrap;border-top:1px solid rgba(255,255,255,.25);padding-top:26px}
@@ -158,15 +157,19 @@ nav a:hover{color:var(--gold-deep)}
 
 /* ---- Reviews ---- */
 .section.paper{background:var(--paper)}
+#reviews{background:var(--gold)}
+#reviews h2{color:var(--cream)}
+.stars-diamonds{display:flex;gap:6px;margin-bottom:14px}
+.stars-diamonds span{width:11px;height:11px;background:var(--turmeric);transform:rotate(45deg);display:inline-block}
+.stars-diamonds span.off{background:transparent;border:1.5px solid var(--turmeric)}
+.mini-bars{display:flex;gap:2px;align-items:flex-end;height:18px}
+.mini-bars span{height:18px;display:block}
 .reviews-track{display:flex;gap:20px;overflow-x:auto;padding-bottom:16px;scroll-snap-type:x mandatory}
 .review-card{flex:0 0 320px;scroll-snap-align:start;background:var(--cream);border:1px solid var(--line);border-radius:var(--radius);padding:28px}
-.review-card .stars{color:var(--gold-deep);font-size:.95rem;margin-bottom:14px;letter-spacing:2px}
-.review-card p{color:var(--charcoal);font-size:.92rem;line-height:1.6;margin-bottom:18px}
+.review-card p{color:var(--charcoal);font-size:1rem;line-height:1.63;margin-bottom:18px}
 .review-card .who{display:flex;align-items:center;gap:10px;font-size:.85rem;font-weight:600}
-.review-card .avatar{width:34px;height:34px;border-radius:50%;background:linear-gradient(135deg,var(--gold),var(--gold-deep));display:flex;align-items:center;justify-content:center;color:var(--cream);font-weight:700;font-size:.8rem}
-.review-tag{font-size:.65rem;color:var(--muted);text-transform:uppercase;letter-spacing:.05em;border:1px solid var(--line);border-radius:100px;padding:3px 10px;display:inline-block;margin-top:12px}
-.gbadge{display:inline-flex;align-items:center;gap:10px;background:var(--cream);border:1px solid var(--line);border-radius:100px;padding:10px 20px;font-size:.9rem;margin-bottom:32px;font-weight:600}
-.gbadge .stars{color:var(--gold-deep)}
+.review-tag{font-size:.65rem;color:var(--muted);text-transform:uppercase;letter-spacing:.05em;border:1px solid var(--line);border-radius:2px;padding:3px 10px;display:inline-block;margin-top:12px}
+.gbadge{display:inline-flex;align-items:center;gap:10px;background:var(--cream);border:1px solid var(--line);border-radius:2px;padding:10px 20px;font-size:.9rem;margin-bottom:32px;font-weight:600}
 
 /* ---- Follow Us: big social cards ---- */
 .social-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:24px;max-width:640px;margin:0 auto}
@@ -236,9 +239,10 @@ footer a:hover{color:var(--turmeric)}
 /* ---- Why Choose Us ---- */
 .why-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:32px}
 .why-card{text-align:center}
-.why-ic{width:56px;height:56px;border-radius:50%;background:linear-gradient(135deg,var(--gold),var(--gold-deep));display:flex;align-items:center;justify-content:center;margin:0 auto 18px;color:var(--cream)}
-.why-card h4{font-size:1.05rem;margin-bottom:8px}
-.why-card p{color:var(--muted);font-size:.88rem;line-height:1.6}
+.icon-bars{display:flex;gap:3px;align-items:flex-end;justify-content:center;height:26px;margin:0 auto 18px}
+.icon-bars span{height:26px;display:block}
+.why-card h4{font-size:23px;font-weight:600;margin-bottom:8px}
+.why-card p{color:var(--muted);font-size:1rem;line-height:1.63}
 
 /* ---- Card hover polish / micro-interactions ---- */
 .review-card{transition:transform .3s var(--ease),box-shadow .3s var(--ease)}
@@ -256,7 +260,7 @@ footer a:hover{color:var(--turmeric)}
 .panorama-viewer{width:100%;height:460px;border-radius:var(--radius);overflow:hidden;background:var(--charcoal);position:relative;cursor:grab;touch-action:pan-y}
 .panorama-viewer.grabbing{cursor:grabbing}
 .panorama-viewer img{position:absolute;top:0;left:0;height:100%;width:auto;max-width:none;user-select:none;-webkit-user-drag:none}
-.pano-hint{position:absolute;bottom:16px;left:50%;transform:translateX(-50%);background:rgba(36,31,28,.65);color:#fff;font-size:.78rem;padding:8px 16px;border-radius:100px;pointer-events:none;transition:opacity .5s;backdrop-filter:blur(4px)}
+.pano-hint{position:absolute;bottom:16px;left:50%;transform:translateX(-50%);background:rgba(36,31,28,.65);color:#fff;font-size:.78rem;padding:8px 16px;border-radius:2px;pointer-events:none;transition:opacity .5s;backdrop-filter:blur(4px)}
 .pano-hint.hide{opacity:0}
 @media(max-width:700px){.panorama-viewer{height:300px}}
 </style>
@@ -309,8 +313,8 @@ src="https://www.facebook.com/tr?id=1586602889631592&ev=PageView&noscript=1"
 <section class="hero">
   <div class="hero-bg"><video autoplay muted loop playsinline preload="metadata" poster="/assets/hero-poster.jpg" aria-hidden="true"><source src="/assets/hero.mp4" type="video/mp4"><img src="/assets/hero-poster.jpg" alt="Quality Dresses showroom, Railway Station Road, Bharuch"></video></div>
   <div class="wrap">
-    <span class="eyebrow rev in" style="color:var(--turmeric)"><a href="https://www.instagram.com/qualitydresses90" target="_blank" rel="noopener" style="color:inherit;text-decoration:none" data-gu="ભરૂચનો સૌથી વિશ્વસનીય ફેશન શોરૂમ, 1990 થી">Bharuch's Most Trusted Fashion Showroom Since 1990</a></span>
-    <h1 class="rev in"><a href="https://www.instagram.com/qualitydresses90" target="_blank" rel="noopener" style="color:inherit;text-decoration:none" data-gu="એક શોરૂમ. દરેક પ્રસંગ. આખો પરિવાર.">One Showroom. Every Occasion. The Whole Family.</a></h1>
+    <span class="eyebrow rev in"><a href="https://www.instagram.com/qualitydresses90" target="_blank" rel="noopener" style="color:inherit;text-decoration:none" data-gu="ભરૂચનો સૌથી વિશ્વસનીય ફેશન શોરૂમ, 1990 થી">Bharuch's Most Trusted Fashion Showroom Since 1990</a></span>
+    <h1 class="rev in"><a href="https://www.instagram.com/qualitydresses90" target="_blank" rel="noopener" style="color:inherit;text-decoration:none" data-gu="એક શોરૂમ. દરેક પ્રસંગ. આખો પરિવાર.">One Showroom. Every Occasion. <em style="font-style:italic;color:var(--gold)">The Whole Family.</em></a></h1>
     <p class="sub rev in"><a href="https://www.instagram.com/qualitydresses90" target="_blank" rel="noopener" style="color:inherit;text-decoration:none" data-gu="4,500+ ચોરસ ફૂટમાં પુરુષો, મહિલાઓ, છોકરાઓ અને છોકરીઓ માટે ફેશન — પરંપરાગત, કેઝ્યુઅલ અને ફોર્મલ — ત્રણ પેઢીઓથી ભરૂચને પહેરાવનારા લોકો દ્વારા તૈયાર.">4,500+ sq ft of Men's, Women's, Boys' &amp; Girls' fashion — ethnic, casual, and formal — curated by people who've dressed Bharuch for three generations.</a></p>
     <div class="hero-ctas rev in">
       <a href="#location" class="btn btn-gold" data-gu="અમારો શોરૂમ જુઓ">Visit Our Showroom</a>
@@ -326,7 +330,7 @@ src="https://www.facebook.com/tr?id=1586602889631592&ev=PageView&noscript=1"
   </div>
 </section>
 
-<div class="fabric-stack"><span style="width:6%"></span><span style="width:3%"></span><span style="width:9%"></span><span style="width:5%"></span><span style="width:12%"></span><span style="width:4%"></span><span style="width:7%"></span><span style="width:10%"></span><span style="width:3%"></span><span style="width:8%"></span><span style="width:5%"></span><span style="width:11%"></span><span style="width:4%"></span><span style="width:13%"></span></div>
+<div class="fabric-stack"><span style="flex:0 0 9%;background:var(--gold)"></span><span style="flex:0 0 4%;background:var(--turmeric)"></span><span style="flex:0 0 15%;background:var(--rani)"></span><span style="flex:0 0 6%;background:var(--indigo-light)"></span><span style="flex:0 0 21%;background:var(--gold)"></span><span style="flex:0 0 3%;background:var(--turmeric)"></span><span style="flex:0 0 11%;background:var(--rani-deep)"></span><span style="flex:0 0 18%;background:var(--indigo-light)"></span><span style="flex:1 1 auto;background:var(--rani)"></span></div>
 
 <main id="main">
 
@@ -339,22 +343,22 @@ src="https://www.facebook.com/tr?id=1586602889631592&ev=PageView&noscript=1"
     </div>
     <div class="why-grid">
       <div class="why-card rev">
-        <div class="why-ic"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2l2.9 6.3 6.9.6-5.2 4.6 1.6 6.8L12 16.9 5.8 20.3l1.6-6.8L2.2 8.9l6.9-.6z"/></svg></div>
+        <div class="icon-bars"><span style="width:8px;background:var(--gold)"></span><span style="width:14px;background:var(--turmeric)"></span><span style="width:6px;background:var(--rani)"></span></div>
         <h4 data-gu="35 વર્ષનો વિશ્વાસ">35 Years of Trust</h4>
         <p data-gu="1990 થી ભરૂચના પરિવારોની ત્રણ પેઢીઓ અહીં ખરીદી કરે છે — આવી વફાદારી ખરીદી શકાતી નથી, તે કમાવવી પડે છે.">Three generations of Bharuch families have shopped here since 1990 — that kind of loyalty isn't bought, it's earned.</p>
       </div>
       <div class="why-card rev">
-        <div class="why-ic"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="7" width="18" height="13" rx="2"/><path d="M8 7V5a4 4 0 0 1 8 0v2"/></svg></div>
+        <div class="icon-bars"><span style="width:19px;background:var(--indigo-light)"></span><span style="width:7px;background:var(--rani-deep)"></span><span style="width:11px;background:var(--gold)"></span></div>
         <h4 data-gu="બધું જ, એક છત નીચે">Everything, One Roof</h4>
         <p data-gu="4,500+ ચોરસ ફૂટમાં પુરુષો, મહિલાઓ, છોકરાઓ અને છોકરીઓ માટે ફેશન — પરંપરાગત, કેઝ્યુઅલ અને ફોર્મલ, બધું એક જ મુલાકાતમાં.">4,500+ sq ft carrying Men's, Women's, Boys' &amp; Girls' fashion — ethnic, casual and formal, all in one visit.</p>
       </div>
       <div class="why-card rev">
-        <div class="why-ic"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg></div>
+        <div class="icon-bars"><span style="width:6px;background:var(--turmeric)"></span><span style="width:16px;background:var(--indigo-light)"></span><span style="width:9px;background:var(--rani-deep)"></span></div>
         <h4 data-gu="પ્રામાણિક સલાહ">Honest Recommendations</h4>
         <p data-gu="અમારો સ્ટાફ તમને ખરેખર શું શોભે છે તે શોધવામાં મદદ કરે છે — ફક્ત મોંઘું શું છે તે નહીં. એટલે જ લોકો ફરી આવે છે.">Our staff helps you find what actually suits you — not just what's expensive. That's why people come back.</p>
       </div>
       <div class="why-card rev">
-        <div class="why-ic"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2a7 7 0 0 0-7 7c0 5 7 13 7 13s7-8 7-13a7 7 0 0 0-7-7z"/><circle cx="12" cy="9" r="2.5"/></svg></div>
+        <div class="icon-bars"><span style="width:13px;background:var(--rani)"></span><span style="width:6px;background:var(--gold)"></span><span style="width:17px;background:var(--turmeric)"></span></div>
         <h4 data-gu="શોધવામાં સરળ, પાર્કિંગ સરળ">Easy to Find, Easy to Park</h4>
         <p data-gu="રેલવે સ્ટેશન રોડ પર જ — ભરૂચમાં તમે ગમે ત્યાંથી આવો, પહોંચવું કેન્દ્રિય અને સરળ છે.">Right on Railway Station Road — central and simple to reach from wherever you're coming from in Bharuch.</p>
       </div>
@@ -413,23 +417,23 @@ src="https://www.facebook.com/tr?id=1586602889631592&ev=PageView&noscript=1"
       <h2 data-gu="સાચી સમીક્ષાઓ, સાચો વિશ્વાસ.">Real Reviews, Real Trust.</h2>
     </div>
     <div style="text-align:center">
-      <div class="gbadge" id="gbadge"><span class="stars">★★★★★</span> <span id="gbadgeText">4.6 on Google · 1,200+ reviews</span></div>
+      <div class="gbadge" id="gbadge"><span class="stars-diamonds"><span></span><span></span><span></span><span></span><span></span></span> <span id="gbadgeText">4.6 on Google · 1,200+ reviews</span></div>
     </div>
     <div class="reviews-track" id="reviewsTrack">
       <div class="review-card">
-        <div class="stars">★★★★★</div>
+        <div class="stars-diamonds"><span></span><span></span><span></span><span></span><span></span></div>
         <p>"Best collection in Bharuch for festive wear. The staff actually helps you find what suits you, not just what's expensive."</p>
-        <div class="who"><div class="avatar">R</div>Rekha P.</div>
+        <div class="who"><div class="mini-bars"><span style="width:5px;background:var(--gold)"></span><span style="width:9px;background:var(--turmeric)"></span></div>Rekha P.</div>
       </div>
       <div class="review-card">
-        <div class="stars">★★★★★</div>
+        <div class="stars-diamonds"><span></span><span></span><span></span><span></span><span></span></div>
         <p>"Been shopping here since I was a kid, now I bring my own kids. That says everything about the trust this store has earned."</p>
-        <div class="who"><div class="avatar">M</div>Mehul S.</div>
+        <div class="who"><div class="mini-bars"><span style="width:6px;background:var(--rani)"></span><span style="width:10px;background:var(--indigo-light)"></span></div>Mehul S.</div>
       </div>
       <div class="review-card">
-        <div class="stars">★★★★★</div>
+        <div class="stars-diamonds"><span></span><span></span><span></span><span></span><span></span></div>
         <p>"Huge variety, fair prices, and the store is so well organised. Wedding shopping here was stress-free."</p>
-        <div class="who"><div class="avatar">P</div>Priya D.</div>
+        <div class="who"><div class="mini-bars"><span style="width:7px;background:var(--turmeric)"></span><span style="width:11px;background:var(--rani-deep)"></span></div>Priya D.</div>
       </div>
     </div>
   </div>
@@ -702,9 +706,9 @@ if(navToggle&&siteNav){
     isGujarati=!isGujarati;
     document.querySelectorAll('[data-gu]').forEach(el=>{
       if(!el.dataset.enOriginal){
-        el.dataset.enOriginal=el.textContent;
+        el.dataset.enOriginal=el.innerHTML;
       }
-      el.textContent=isGujarati?el.dataset.gu:el.dataset.enOriginal;
+      el.innerHTML=isGujarati?el.dataset.gu:el.dataset.enOriginal;
     });
     langToggle.textContent=isGujarati?'English':'ગુજરાતી';
     document.documentElement.lang=isGujarati?'gu':'en';
@@ -752,14 +756,21 @@ stats.forEach(el=>statIO.observe(el));
 
     if(data.reviews && data.reviews.length){
       const track = document.getElementById('reviewsTrack');
-      track.innerHTML = data.reviews.map(rev => `
+      const accentColors=['var(--gold)','var(--turmeric)','var(--rani)','var(--indigo-light)','var(--rani-deep)'];
+      track.innerHTML = data.reviews.map((rev,i) => {
+        const filled=Math.round(rev.rating);
+        const stars=Array.from({length:5},(_,j)=>`<span${j>=filled?' class="off"':''}></span>`).join('');
+        const c1=accentColors[(i*2)%accentColors.length];
+        const c2=accentColors[(i*2+1)%accentColors.length];
+        return `
         <div class="review-card">
-          <div class="stars">${'★'.repeat(Math.round(rev.rating))}${'☆'.repeat(5-Math.round(rev.rating))}</div>
+          <div class="stars-diamonds">${stars}</div>
           <p>"${rev.text}"</p>
-          <div class="who"><div class="avatar">${rev.author.charAt(0)}</div>${rev.author}</div>
+          <div class="who"><div class="mini-bars"><span style="width:6px;background:${c1}"></span><span style="width:10px;background:${c2}"></span></div>${rev.author}</div>
           <span class="review-tag">Google · ${rev.time}</span>
         </div>
-      `).join('');
+      `;
+      }).join('');
     }
   }catch(err){
     console.error('Live reviews unavailable, showing sample content', err);
