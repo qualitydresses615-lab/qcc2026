@@ -126,7 +126,68 @@ header{position:fixed;top:var(--banner-h);left:0;right:0;z-index:100;padding:14p
 .festival-banner-strip{display:flex;height:4px;width:100%}
 .hero-corner-mark{position:absolute;top:calc(100px + var(--banner-h) + 10px);right:30px;opacity:.72;width:68px;pointer-events:none;z-index:1}
 .hero-corner-mark svg{width:100%;height:auto;display:block}
-@media(max-width:700px){.hero-corner-mark{width:44px}}
+
+/* ---- Festival entrance / ambient animations (transform+opacity only) ---- */
+@keyframes markFadeIn{0%{opacity:0;transform:scale(.85)}100%{opacity:.72;transform:scale(1)}}
+.hero-corner-mark{animation:markFadeIn .7s ease-out forwards}
+
+@keyframes flagUnfurl{0%{transform:scaleY(.15) rotate(-8deg);opacity:0}100%{transform:scaleY(1) rotate(0deg);opacity:1}}
+@keyframes flagWave{0%,100%{transform:skewX(2deg)}50%{transform:skewX(-2deg)}}
+.flag-unfurl{display:inline-block;transform-origin:top;animation:flagUnfurl .9s cubic-bezier(.34,1.56,.64,1) forwards,flagWave 3s ease-in-out .9s infinite}
+
+@keyframes kiteDrift1{0%,100%{transform:translateY(-8px) rotate(-3deg)}50%{transform:translateY(8px) rotate(3deg)}}
+@keyframes kiteDrift2{0%,100%{transform:translateY(8px) rotate(3deg)}50%{transform:translateY(-8px) rotate(-3deg)}}
+.kite-drift{position:absolute;width:28px;opacity:.4;z-index:0;pointer-events:none}
+.kite-drift svg{width:100%;height:auto;display:block}
+.kite-drift.left{top:34%;left:22px;animation:markFadeIn .8s ease-out forwards,kiteDrift1 7s ease-in-out .8s infinite}
+.kite-drift.right{top:50%;right:64px;width:24px;opacity:.35;animation:markFadeIn .8s ease-out forwards,kiteDrift2 8s ease-in-out .8s infinite}
+
+@keyframes rakhiFlyIn{0%{transform:translate(-120px,-80px) rotate(-25deg) scale(.6);opacity:0}100%{transform:translate(0,0) rotate(0deg) scale(1);opacity:.72}}
+.rakhi-fly-in{animation:rakhiFlyIn 1.1s cubic-bezier(.22,1,.36,1) forwards}
+@keyframes rakhiTrailFade{0%{opacity:0}20%{opacity:1}70%{opacity:1}100%{opacity:0}}
+.rakhi-trail{position:absolute;top:calc(100px + var(--banner-h) - 10px);right:6px;width:140px;height:110px;pointer-events:none;z-index:0;opacity:0;animation:rakhiTrailFade 2s ease-out forwards}
+
+@keyframes dandiyaEntrance{0%{opacity:0;transform:scale(.7)}100%{opacity:1;transform:scale(1)}}
+@keyframes dandiyaClashA{0%,100%{transform:rotate(45deg)}7%{transform:rotate(53deg)}14%{transform:rotate(45deg)}21%{transform:rotate(53deg)}28%{transform:rotate(45deg)}}
+@keyframes dandiyaClashB{0%,100%{transform:rotate(-45deg)}7%{transform:rotate(-53deg)}14%{transform:rotate(-45deg)}21%{transform:rotate(-53deg)}28%{transform:rotate(-45deg)}}
+.dandiya-mark{position:absolute;top:calc(100px + var(--banner-h) + 10px);right:30px;width:68px;height:68px;opacity:.72;pointer-events:none;z-index:1;animation:dandiyaEntrance .5s ease-out forwards}
+.dandiya-stick{position:absolute;top:50%;left:50%;width:3px;height:44px;border-radius:2px;margin:-22px 0 0 -1.5px;transform-origin:center}
+.dandiya-stick.a{background:var(--rani);animation:dandiyaClashA 2.1s ease-in-out .5s infinite}
+.dandiya-stick.b{background:var(--gold);animation:dandiyaClashB 2.1s ease-in-out .5s infinite}
+
+@keyframes flameFlicker{0%,100%{transform:scale(.92)}50%{transform:scale(1.08)}}
+.flame-flicker{transform-box:fill-box;transform-origin:center;animation:flameFlicker 1.4s ease-in-out .7s infinite}
+@keyframes sparkRise{0%{transform:translateY(0);opacity:0}20%{opacity:1}100%{transform:translateY(-22px);opacity:0}}
+.spark-dot{position:absolute;width:3px;height:3px;border-radius:50%;background:var(--turmeric);pointer-events:none;animation:sparkRise 2.4s ease-out infinite}
+
+@keyframes confettiFall{0%{transform:translateY(-30px) rotate(45deg);opacity:0}15%{opacity:1}100%{transform:translateY(170px) rotate(45deg);opacity:0}}
+.confetti-container{position:absolute;inset:0;overflow:hidden;pointer-events:none;z-index:0}
+.confetti-piece{position:absolute;top:calc(100px + var(--banner-h));width:10px;height:10px;pointer-events:none;animation:confettiFall 2.6s ease-in forwards}
+
+@media(max-width:700px){
+  .hero-corner-mark{width:44px}
+  .kite-drift{opacity:.25}
+  .kite-drift.left{left:8px}
+  .kite-drift.right{right:36px}
+  .spark-dot:nth-child(n+3){display:none}
+  .confetti-piece:nth-child(n+6){display:none}
+  .dandiya-mark{width:44px;height:44px}
+}
+
+@media (prefers-reduced-motion: reduce){
+  .flag-unfurl{animation:none;transform:none;opacity:1}
+  .hero-corner-mark{animation:none;opacity:.72;transform:none}
+  .kite-drift{animation:none;opacity:.4;transform:none}
+  .rakhi-fly-in{animation:none;transform:none;opacity:.72}
+  .rakhi-trail{display:none}
+  .dandiya-mark{animation:none;opacity:.72;transform:none}
+  .dandiya-stick{animation:none}
+  .dandiya-stick.a{transform:rotate(45deg)}
+  .dandiya-stick.b{transform:rotate(-45deg)}
+  .flame-flicker{animation:none}
+  .spark-dot{display:none}
+  .confetti-piece{display:none}
+}
 header .wrap{display:flex;align-items:center;justify-content:space-between}
 .logo img{height:44px;width:auto}
 nav{display:flex;gap:32px;font-size:.88rem;color:var(--charcoal);font-weight:600}
@@ -608,7 +669,6 @@ const SWATCH_SVG='<span style="display:flex; gap:3px; align-items:center;"><span
 const DIYA_HERO_SVG='<svg width="72" height="72" viewBox="0 0 48 48" fill="none" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" xmlns="http://www.w3.org/2000/svg"><path d="M10 30 C10 30 16 26 24 26 C32 26 38 30 38 30 C38 34 32 37 24 37 C16 37 10 34 10 30 Z" stroke="#1F3A5F"></path><path d="M24 26 C24 20 24 16 24 13" stroke="#A33F4D"></path><path d="M24 13 C20 15 20 20 24 21 C28 20 28 15 24 13 Z" stroke="#D9A441"></path><path d="M14 41 H34" stroke="#2F5A7A"></path></svg>';
 const KITE_HERO_SVG='<svg width="72" height="72" viewBox="0 0 48 48" fill="none" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" xmlns="http://www.w3.org/2000/svg"><path d="M24 6 L38 20 L24 34 L10 20 Z" stroke="#1F3A5F"></path><path d="M24 6 V34" stroke="#2F5A7A"></path><path d="M10 20 H38" stroke="#2F5A7A"></path><path d="M24 34 C22 38 27 39 25 43" stroke="#A33F4D"></path><path d="M28 41 L33 40" stroke="#D9A441"></path></svg>';
 const RAKHI_HERO_SVG='<svg width="72" height="72" viewBox="0 0 48 48" fill="none" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" xmlns="http://www.w3.org/2000/svg"><circle cx="24" cy="24" r="6.5" stroke="#A33F4D"></circle><circle cx="24" cy="24" r="11" stroke="#D9A441"></circle><path d="M13 24 C8 20 5 26 3 28" stroke="#1F3A5F"></path><path d="M35 24 C40 20 43 26 45 28" stroke="#1F3A5F"></path><path d="M13 24 C9 28 6 34 5 38" stroke="#2F5A7A"></path><path d="M35 24 C39 28 42 34 43 38" stroke="#2F5A7A"></path></svg>';
-const DANDIYA_HERO_SVG='<svg width="72" height="72" viewBox="0 0 48 48" fill="none" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" xmlns="http://www.w3.org/2000/svg"><path d="M14 10 L34 38" stroke="#A33F4D"></path><path d="M34 10 L14 38" stroke="#D9A441"></path><path d="M14 10 L17 7" stroke="#A33F4D"></path><path d="M34 10 L31 7" stroke="#D9A441"></path><path d="M14 38 L12 41" stroke="#A33F4D"></path><path d="M34 38 L36 41" stroke="#D9A441"></path></svg>';
 
 function stripHTML(segments){
   return segments.map(s=>'<span style="flex:'+s.flex+';background:'+s.bg+'"></span>').join('');
@@ -627,19 +687,90 @@ const STRIP_FESTIVE=stripHTML([
 
 const FESTIVALS = [
   // ---- Fixed (MM-DD), automatic forever — do not touch ----
-  { name:'Uttarayan',         type:'fixed', start:'01-13', end:'01-15', gold:'#D9A441', goldDeep:'#A33F4D', banner:'🪁 Happy Uttarayan — Quality Dresses', variant:'festive', heroIcon:KITE_HERO_SVG },
+  { name:'Uttarayan',         type:'fixed', start:'01-13', end:'01-15', gold:'#D9A441', goldDeep:'#A33F4D', banner:'🪁 Happy Uttarayan — Quality Dresses', variant:'festive', heroMark:'kite' },
   { name:'Republic Day',      type:'fixed', start:'01-24', end:'01-26', banner:'🇮🇳 Happy Republic Day', variant:'tricolour' },
   { name:'Independence Day',  type:'fixed', start:'08-11', end:'08-15', banner:'🇮🇳 Happy Independence Day', variant:'tricolour' },
-  { name:'New Year',          type:'fixed', start:'12-31', end:'01-01', gold:'#D9A441', goldDeep:'#A33F4D', banner:'✨ Happy New Year from Quality Dresses' },
+  { name:'New Year',          type:'fixed', start:'12-31', end:'01-01', gold:'#D9A441', goldDeep:'#A33F4D', banner:'✨ Happy New Year from Quality Dresses', confetti:true },
 
   // ---- Lunar calendar, year-specific — set for 2026 & 2027 only (see note above) ----
-  { name:'Raksha Bandhan',      type:'dated', start:'2026-08-26', end:'2026-08-28', gold:'#D9A441', goldDeep:'#A33F4D', banner:'Raksha Bandhan collection is here! 🎗️', variant:'festive', heroIcon:RAKHI_HERO_SVG },
-  { name:'Raksha Bandhan',      type:'dated', start:'2027-08-16', end:'2027-08-17', gold:'#D9A441', goldDeep:'#A33F4D', banner:'Raksha Bandhan collection is here! 🎗️', variant:'festive', heroIcon:RAKHI_HERO_SVG },
-  { name:'Navratri & Dussehra', type:'dated', start:'2026-10-11', end:'2026-10-20', gold:'#D9A441', goldDeep:'#A33F4D', banner:'Navratri Special Collection Live Now ✨', variant:'festive', heroIcon:DANDIYA_HERO_SVG },
-  { name:'Navratri & Dussehra', type:'dated', start:'2027-09-30', end:'2027-10-09', gold:'#D9A441', goldDeep:'#A33F4D', banner:'Navratri Special Collection Live Now ✨', variant:'festive', heroIcon:DANDIYA_HERO_SVG },
-  { name:'Diwali',              type:'dated', start:'2026-11-05', end:'2026-11-10', gold:'#D9A441', goldDeep:'#A33F4D', banner:'🪔 Happy Diwali — Festive Collection Live', variant:'festive', heroIcon:DIYA_HERO_SVG },
-  { name:'Diwali',              type:'dated', start:'2027-10-27', end:'2027-10-31', gold:'#D9A441', goldDeep:'#A33F4D', banner:'🪔 Happy Diwali — Festive Collection Live', variant:'festive', heroIcon:DIYA_HERO_SVG },
+  { name:'Raksha Bandhan',      type:'dated', start:'2026-08-26', end:'2026-08-28', gold:'#D9A441', goldDeep:'#A33F4D', banner:'Raksha Bandhan collection is here! 🎗️', variant:'festive', heroMark:'rakhi' },
+  { name:'Raksha Bandhan',      type:'dated', start:'2027-08-16', end:'2027-08-17', gold:'#D9A441', goldDeep:'#A33F4D', banner:'Raksha Bandhan collection is here! 🎗️', variant:'festive', heroMark:'rakhi' },
+  { name:'Navratri & Dussehra', type:'dated', start:'2026-10-11', end:'2026-10-20', gold:'#D9A441', goldDeep:'#A33F4D', banner:'Navratri Special Collection Live Now ✨', variant:'festive', heroMark:'navratri' },
+  { name:'Navratri & Dussehra', type:'dated', start:'2027-09-30', end:'2027-10-09', gold:'#D9A441', goldDeep:'#A33F4D', banner:'Navratri Special Collection Live Now ✨', variant:'festive', heroMark:'navratri' },
+  { name:'Diwali',              type:'dated', start:'2026-11-05', end:'2026-11-10', gold:'#D9A441', goldDeep:'#A33F4D', banner:'🪔 Happy Diwali — Festive Collection Live', variant:'festive', heroMark:'diya' },
+  { name:'Diwali',              type:'dated', start:'2027-10-27', end:'2027-10-31', gold:'#D9A441', goldDeep:'#A33F4D', banner:'🪔 Happy Diwali — Festive Collection Live', variant:'festive', heroMark:'diya' },
 ];
+
+// Builds the animated hero-corner element(s) for a given festival's
+// heroMark type. Called with undefined for festivals with no mark
+// (tricolour days, whose animation lives entirely in the banner icon).
+function renderHeroMark(type){
+  const hero=document.querySelector('.hero');
+  if(!hero||!type)return;
+
+  if(type==='diya'){
+    const mark=document.createElement('div');
+    mark.className='hero-corner-mark';
+    mark.style.position='relative';
+    mark.innerHTML=DIYA_HERO_SVG;
+    const flamePath=mark.querySelectorAll('svg path')[2];
+    if(flamePath)flamePath.classList.add('flame-flicker');
+    for(let i=0;i<3;i++){
+      const spark=document.createElement('span');
+      spark.className='spark-dot';
+      spark.style.left=(26+i*9)+'px';
+      spark.style.top='4px';
+      spark.style.animationDelay=(i*0.7)+'s';
+      mark.appendChild(spark);
+    }
+    hero.appendChild(mark);
+  }else if(type==='kite'){
+    const mark=document.createElement('div');
+    mark.className='hero-corner-mark';
+    mark.innerHTML=KITE_HERO_SVG;
+    hero.appendChild(mark);
+    const left=document.createElement('div');
+    left.className='kite-drift left';
+    left.innerHTML=KITE_HERO_SVG;
+    hero.appendChild(left);
+    const right=document.createElement('div');
+    right.className='kite-drift right';
+    right.innerHTML=KITE_HERO_SVG;
+    hero.appendChild(right);
+  }else if(type==='rakhi'){
+    const trail=document.createElement('div');
+    trail.className='rakhi-trail';
+    trail.innerHTML='<svg viewBox="0 0 140 110" width="140" height="110" xmlns="http://www.w3.org/2000/svg"><path d="M4 8 C 40 4, 90 40, 128 84" fill="none" stroke="var(--rani)" stroke-width="1" stroke-dasharray="4 4"/></svg>';
+    hero.appendChild(trail);
+    const mark=document.createElement('div');
+    mark.className='hero-corner-mark rakhi-fly-in';
+    mark.innerHTML=RAKHI_HERO_SVG;
+    hero.appendChild(mark);
+  }else if(type==='navratri'){
+    const mark=document.createElement('div');
+    mark.className='dandiya-mark';
+    mark.innerHTML='<span class="dandiya-stick a"></span><span class="dandiya-stick b"></span>';
+    hero.appendChild(mark);
+  }
+}
+
+function renderConfetti(){
+  const hero=document.querySelector('.hero');
+  if(!hero)return;
+  const container=document.createElement('div');
+  container.className='confetti-container';
+  const colors=['var(--gold)','var(--turmeric)','var(--rani)','var(--indigo-light)','var(--rani-deep)'];
+  const leftPositions=[6,16,27,37,47,57,67,77,87,95];
+  leftPositions.forEach((left,i)=>{
+    const piece=document.createElement('span');
+    piece.className='confetti-piece';
+    piece.style.left=left+'%';
+    piece.style.background=colors[i%colors.length];
+    piece.style.animationDelay=(i*0.18)+'s';
+    container.appendChild(piece);
+  });
+  hero.appendChild(container);
+}
 
 (function(){
   const pad=n=>String(n).padStart(2,'0');
@@ -672,15 +803,8 @@ const FESTIVALS = [
     document.documentElement.style.setProperty('--gold-deep',festival.goldDeep);
   }
 
-  if(festival.heroIcon){
-    const hero=document.querySelector('.hero');
-    if(hero){
-      const mark=document.createElement('div');
-      mark.className='hero-corner-mark';
-      mark.innerHTML=festival.heroIcon;
-      hero.appendChild(mark);
-    }
-  }
+  renderHeroMark(festival.heroMark);
+  if(festival.confetti)renderConfetti();
 
   const dismissKey='festivalBannerDismissed:'+festival.name+':'+festival.start;
   let dismissed=false;
@@ -689,7 +813,7 @@ const FESTIVALS = [
 
   let icon='', textColor='var(--cream)', strip=STRIP_GENERIC;
   if(festival.variant==='tricolour'){
-    icon=FLAG_SVG; textColor='var(--cream)'; strip=STRIP_TRICOLOUR;
+    icon='<span class="flag-unfurl">'+FLAG_SVG+'</span>'; textColor='var(--cream)'; strip=STRIP_TRICOLOUR;
   }else if(festival.variant==='festive'){
     icon=SWATCH_SVG; textColor='var(--turmeric)'; strip=STRIP_FESTIVE;
   }
