@@ -269,6 +269,8 @@ footer a:hover{color:var(--turmeric)}
 
 /* ---- Accessibility: skip link ---- */
 .skip-link{position:absolute;left:-999px;top:0;background:var(--gold);color:var(--cream);padding:12px 20px;z-index:200;font-weight:700;border-radius:0 0 8px 0}
+.visually-hidden{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+.panorama-viewer:focus-visible{outline:2px solid var(--turmeric);outline-offset:2px}
 .skip-link:focus{left:0}
 
 /* ---- Mobile nav ---- */
@@ -454,17 +456,18 @@ src="https://www.facebook.com/tr?id=1586602889631592&ev=PageView&noscript=1"
       <p data-gu="અંદર જવા માટે વિભાગ પર ટેપ કરો — આસપાસ જોવા માટે ફોટો ખેંચો.">Tap a department to step inside — drag the photo to look around.</p>
     </div>
     <div class="tour-tabs" role="tablist" aria-label="Choose a department to explore">
-      <button class="tour-tab active" data-img="/assets/tour/womens.jpg" style="background-image:url('/assets/tour/womens-thumb.jpg')" role="tab" aria-selected="true"><span data-gu="મહિલા">Women's</span></button>
-      <button class="tour-tab" data-img="/assets/tour/girls.jpg" style="background-image:url('/assets/tour/girls-thumb.jpg')" role="tab" aria-selected="false"><span data-gu="છોકરીઓ">Girls'</span></button>
-      <button class="tour-tab" data-img="/assets/tour/mens-ethnic.jpg" style="background-image:url('/assets/tour/mens-ethnic-thumb.jpg')" role="tab" aria-selected="false"><span data-gu="પુરુષ પરંપરાગત">Men's Ethnic</span></button>
-      <button class="tour-tab" data-img="/assets/tour/mens-formal.jpg" style="background-image:url('/assets/tour/mens-formal-thumb.jpg')" role="tab" aria-selected="false"><span data-gu="પુરુષ ફોર્મલ">Men's Formal</span></button>
-      <button class="tour-tab" data-img="/assets/tour/mens-casual.jpg" style="background-image:url('/assets/tour/mens-casual-thumb.jpg')" role="tab" aria-selected="false"><span data-gu="પુરુષ કેઝ્યુઅલ">Men's Casual</span></button>
-      <button class="tour-tab" data-img="/assets/tour/boys.jpg" style="background-image:url('/assets/tour/boys-thumb.jpg')" role="tab" aria-selected="false"><span data-gu="છોકરાઓ">Boys'</span></button>
-      <button class="tour-tab" data-img="/assets/tour/accessories.jpg" style="background-image:url('/assets/tour/accessories-thumb.jpg')" role="tab" aria-selected="false"><span data-gu="એસેસરીઝ">Accessories</span></button>
+      <button class="tour-tab active" data-img="/assets/tour/womens.jpg" style="background-image:url('/assets/tour/womens-thumb.jpg')" role="tab" aria-selected="true" aria-label="View Women's department photos"><span data-gu="મહિલા">Women's</span></button>
+      <button class="tour-tab" data-img="/assets/tour/girls.jpg" style="background-image:url('/assets/tour/girls-thumb.jpg')" role="tab" aria-selected="false" aria-label="View Girls' department photos"><span data-gu="છોકરીઓ">Girls'</span></button>
+      <button class="tour-tab" data-img="/assets/tour/mens-ethnic.jpg" style="background-image:url('/assets/tour/mens-ethnic-thumb.jpg')" role="tab" aria-selected="false" aria-label="View Men's Ethnic department photos"><span data-gu="પુરુષ પરંપરાગત">Men's Ethnic</span></button>
+      <button class="tour-tab" data-img="/assets/tour/mens-formal.jpg" style="background-image:url('/assets/tour/mens-formal-thumb.jpg')" role="tab" aria-selected="false" aria-label="View Men's Formal department photos"><span data-gu="પુરુષ ફોર્મલ">Men's Formal</span></button>
+      <button class="tour-tab" data-img="/assets/tour/mens-casual.jpg" style="background-image:url('/assets/tour/mens-casual-thumb.jpg')" role="tab" aria-selected="false" aria-label="View Men's Casual department photos"><span data-gu="પુરુષ કેઝ્યુઅલ">Men's Casual</span></button>
+      <button class="tour-tab" data-img="/assets/tour/boys.jpg" style="background-image:url('/assets/tour/boys-thumb.jpg')" role="tab" aria-selected="false" aria-label="View Boys' department photos"><span data-gu="છોકરાઓ">Boys'</span></button>
+      <button class="tour-tab" data-img="/assets/tour/accessories.jpg" style="background-image:url('/assets/tour/accessories-thumb.jpg')" role="tab" aria-selected="false" aria-label="View Accessories department photos"><span data-gu="એસેસરીઝ">Accessories</span></button>
     </div>
-    <div id="panorama360" class="panorama-viewer">
+    <div id="panorama360" class="panorama-viewer" tabindex="0">
       <img id="panoImg" src="/assets/tour/womens.jpg" alt="Quality Dresses — Women's department" draggable="false" loading="lazy">
       <span class="pano-hint" id="panoHint">⟷ Drag to look around</span>
+      <span class="visually-hidden">Use arrow keys to look around this department</span>
     </div>
   </div>
 </section>
@@ -477,7 +480,7 @@ src="https://www.facebook.com/tr?id=1586602889631592&ev=PageView&noscript=1"
       <h2 data-gu="સાચી સમીક્ષાઓ, સાચો વિશ્વાસ.">Real Reviews, Real Trust.</h2>
     </div>
     <div style="text-align:center">
-      <div class="gbadge" id="gbadge"><span class="stars-diamonds"><span></span><span></span><span></span><span></span><span></span></span> <span id="gbadgeText">4.6 on Google · 1,200+ reviews</span></div>
+      <div class="gbadge" id="gbadge"><span class="stars-diamonds"><span></span><span></span><span></span><span></span><span></span></span> <span id="gbadgeText">4.8 on Google · 4,200+ reviews</span></div>
     </div>
     <div class="reviews-track" id="reviewsTrack">
       <div class="review-card">
@@ -624,6 +627,14 @@ src="https://www.facebook.com/tr?id=1586602889631592&ev=PageView&noscript=1"
   wrap.addEventListener('touchstart',e=>dragStart(e.touches[0].clientX),{passive:true});
   wrap.addEventListener('touchmove',e=>dragMove(e.touches[0].clientX),{passive:true});
   wrap.addEventListener('touchend',dragEnd);
+  wrap.addEventListener('keydown',e=>{
+    if(e.key!=='ArrowLeft'&&e.key!=='ArrowRight')return;
+    e.preventDefault();
+    const step=50;
+    offsetX=Math.min(0,Math.max(-maxOffset,offsetX+(e.key==='ArrowLeft'?step:-step)));
+    img.style.left=offsetX+'px';
+    if(hint)hint.classList.add('hide');
+  });
   window.addEventListener('resize',computeBounds);
 
   tabs.forEach(tab=>{
