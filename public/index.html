@@ -606,12 +606,25 @@ src="https://www.facebook.com/tr?id=1586602889631592&ev=PageView&noscript=1"
   function setImage(src,alt){
     img.style.opacity='0';
     const temp=new Image();
-    temp.onload=()=>{
-      img.src=src; if(alt)img.alt=alt;
-      offsetX=0; img.style.left='0px';
-      requestAnimationFrame(()=>{computeBounds();img.style.opacity='1';});
-    };
     temp.src=src;
+    // decode() finishes the (potentially heavy) JPEG decode off the
+    // critical path before we touch the DOM, instead of leaving the
+    // browser to decode synchronously whenever it gets around to
+    // painting img.src — decode() itself falls back to onload on
+    // older browsers that don't support it.
+    const apply=()=>{
+      requestAnimationFrame(()=>{
+        img.src=src; if(alt)img.alt=alt;
+        offsetX=0; img.style.left='0px';
+        computeBounds();
+        img.style.opacity='1';
+      });
+    };
+    if(temp.decode){
+      temp.decode().then(apply).catch(apply);
+    }else{
+      temp.onload=apply;
+    }
   }
   function dragStart(x){dragging=true;startX=x;startOffset=offsetX;wrap.classList.add('grabbing');if(hint)hint.classList.add('hide');}
   function dragMove(x){
@@ -867,17 +880,41 @@ if(navToggle&&siteNav){
 (function(){
   const langToggle=document.getElementById('langToggle');
   if(!langToggle)return;
+  const guElements=document.querySelectorAll('[data-gu]');
   let isGujarati=false;
+  let runId=0;
+
+  // Tagged with the run id that requested it, so if a second click
+  // arrives before this batch finishes, the stale run detects it's
+  // been superseded and stops instead of writing inconsistent state.
+  function applyBatch(targetState,myRunId){
+    const BATCH=12;
+    let i=0;
+    (function step(){
+      if(myRunId!==runId)return;
+      const end=Math.min(i+BATCH,guElements.length);
+      for(;i<end;i++){
+        const el=guElements[i];
+        if(!el.dataset.enOriginal){
+          el.dataset.enOriginal=el.innerHTML;
+        }
+        el.innerHTML=targetState?el.dataset.gu:el.dataset.enOriginal;
+      }
+      if(i<guElements.length){
+        requestAnimationFrame(step);
+      }
+    })();
+  }
+
   langToggle.addEventListener('click',()=>{
     isGujarati=!isGujarati;
-    document.querySelectorAll('[data-gu]').forEach(el=>{
-      if(!el.dataset.enOriginal){
-        el.dataset.enOriginal=el.innerHTML;
-      }
-      el.innerHTML=isGujarati?el.dataset.gu:el.dataset.enOriginal;
-    });
+    // Update the button and <html lang> immediately — cheap, gives
+    // instant feedback — then spread the ~40+ text swaps across
+    // several animation frames so no single frame does all the work.
     langToggle.textContent=isGujarati?'English':'ગુજરાતી';
     document.documentElement.lang=isGujarati?'gu':'en';
+    runId++;
+    requestAnimationFrame(()=>applyBatch(isGujarati,runId));
   });
 })();
 
